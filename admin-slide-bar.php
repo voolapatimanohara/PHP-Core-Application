@@ -25,9 +25,9 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+           <!-- <div class="sidebar-heading">
+                Menu Items
+            </div> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
         
@@ -37,20 +37,20 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Action Menu</span>
                 </a>
                 
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Components:</h6>
-                        <a class="collapse-item" href="admin-judge.php">Judge</a>
+                       <!-- <h6 class="collapse-header">Actions:</h6> -->
+                        <a class="collapse-item" href="admin-judge.php">Judges</a>
                         <a class="collapse-item" href="admin-projects.php">Projects</a>
                     </div>
                 </div>
             </li>
 
           
-                <li class="nav-item">
+            <!--    <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
@@ -64,7 +64,7 @@
                         <a class="collapse-item" href="admin-projects.php">Projects</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
          
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -77,10 +77,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Assignments:</h6>
-                        <a class="collapse-item" href="round_1.html">Round-I</a>
-                        <a class="collapse-item" href="round_2.html">Round-II</a>
-                        <a class="collapse-item" href="round_3.html">Round-III</a>
+                        <a class="collapse-item" href="round_1.html">Round 1</a>
+                        <a class="collapse-item" href="round_2.html">Semi-final</a>
+                        <a class="collapse-item" href="round_3.html">Final</a>
                        
                     </div>
                 </div>
