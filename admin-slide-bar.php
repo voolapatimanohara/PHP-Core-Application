@@ -6,7 +6,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <i class="fas fa-user-graduate"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Itsshowcase</div>
             </a>
@@ -22,17 +22,7 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-           <!-- <div class="sidebar-heading">
-                Menu Items
-            </div> -->
-
-            <!-- Nav Item - Pages Collapse Menu -->
-        
-               
-            
+            <hr class="sidebar-divider">          
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -45,6 +35,7 @@
                        <!-- <h6 class="collapse-header">Actions:</h6> -->
                         <a class="collapse-item" href="admin-judge.php">Judges</a>
                         <a class="collapse-item" href="admin-projects.php">Projects</a>
+                        <a class="collapse-item" href="admin-assign-projects.php">Assign Projects</a>
                     </div>
                 </div>
             </li>
@@ -77,9 +68,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="round_1.html">Round 1</a>
-                        <a class="collapse-item" href="round_2.html">Semi-final</a>
-                        <a class="collapse-item" href="round_3.html">Final</a>
+                        <a class="collapse-item" href="round-1.php">Round 1</a>
+                        <a class="collapse-item" href="semi-final.php">Semi-final</a>
+                        <a class="collapse-item" href="final.php">Final</a>
                        
                     </div>
                 </div>
