@@ -102,12 +102,12 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                 <td>".$row["sponsor"]."</td>
                <td>" .substr($row["pr_description"],0,25)."..</td>
                 <td>".$row["projectType"]."</td>
-                <td> <a href='#' data-toggle='modal' data-target='#viewProjectModel_".$row["id"]."'>
+                <td> <a href='#' data-toggle='modal' data-target='#assignProjectModel_".$row["id"]."'>
                 <i class='fas fa-eye'></i></a> </td>
 
    
                 </tr>"?>
-                                        <div class="modal fade" id="viewProjectModel_<?php echo $row['id'] ?>"
+                                        <div class="modal fade" id="assignProjectModel_<?php echo $row['id'] ?>"
                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -121,8 +121,30 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <h5><?php echo $row["names"]; ?></h5>
-                                                        <p><?php echo $row["pr_description"]; ?></p>
+                                                    <form>
+                                                       
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Round text</label>
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlSelect2">Assign Judges</label>
+                                                            <select multiple class="form-control" id="exampleFormControlSelect2">
+                                                            <option>Jonshon</option>
+                                                            <option>David</option>
+                                                            <option>Ram</option>
+                                                            <option>David</option>
+                                                            <option>Anand</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                        </div>
+                                                        <input class="btn btn-primary" type="submit" name="save" value="Add">
+                                       
+                                                    </form> 
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" type="button"

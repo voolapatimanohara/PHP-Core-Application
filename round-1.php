@@ -74,23 +74,17 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Program</th>
-                    <th>Sponsor</th>
-                    <th>Description</th>
                     <th>Project Type</th>
-                    <th>Actions</th>                       
+                    <th  class='text-center'>Actions</th>                       
                 </tr>
             </thead>
             <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Program</th>
-                    <th>Sponsor</th>
-                    <th>Description</th>
-                    <th>Project Type</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Project Type</th>
+                        <th  class='text-center'>Actions</th> 
+                    </tr>
             </tfoot>
                 <tbody>";
                 // output data of each row
@@ -98,31 +92,55 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                 echo "<tr>
                 <td>".$row["id"]."</td>
                 <td>".$row["title"]."</td>
-                <td>".$row["program"]."</td>
-                <td>".$row["sponsor"]."</td>
-               <td>" .substr($row["pr_description"],0,25)."..</td>
                 <td>".$row["projectType"]."</td>
-                <td> <a href='#' data-toggle='modal' data-target='#viewProjectModel_".$row["id"]."'>
-                <i class='fas fa-eye'></i></a> </td>
-
+                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_".$row["id"]."'>
+                <i class='fa fa-external-link-alt'></i></a> </td>
+             
    
                 </tr>"?>
-                                        <div class="modal fade" id="viewProjectModel_<?php echo $row['id'] ?>"
+                                        <div class="modal fade" id="roundProjectModel_<?php echo $row['id'] ?>"
                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            <?php echo $row["title"]; ?></h5>
+                                                    <h3>Round-I</h3>
+                                                        
                                                         <button class="close" type="button" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <h5><?php echo $row["names"]; ?></h5>
-                                                        <p><?php echo $row["pr_description"]; ?></p>
+                                                    <h5 class="modal-title" id="assignModalLabel">
+                                                            <?php echo $row["title"]; ?></h5>
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Question-1</label>
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Question-2</label>
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlSelect1">Add Markes</label>
+                                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                        </div>
+                                                        <input class="btn btn-primary" type="submit" name="save" value="Add">
+    
+                                                    </form>                                                 
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" type="button"
