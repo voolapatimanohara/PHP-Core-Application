@@ -212,7 +212,7 @@ echo "</tbody></table>";?>
                 <td>".$row["firstName"]."</td>
                 <td>".$row["lastName"]."</td>
                 <td>".$row["loginId"]."</td>
-                <td>".$row["loginId"]."</td>
+                <td>".$row["firstName"]."_".$row["lastName"]."</td>
                 <td>".$row["status"]."</td>
                 <td> <a href='#' data-toggle='modal' data-target='#viewjudgeModel_".$row["id"]."'>
                 <i class='fas fa-eye'></i></a> </td>
