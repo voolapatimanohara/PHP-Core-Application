@@ -5,7 +5,8 @@ if (isset($_SESSION['errors']))
 }else{
 	session_start();
 	
-	if (isset($_SESSION['login_user'])) {
+	if (isset($_SESSION['login_user']) && isset($_SESSION['role'])) {
+        // echo  $_SESSION['role'];exit;
 		//echo $_SESSION['login_user'];exit;
 	header("Location: admin.php");
 	}
@@ -22,9 +23,9 @@ if (isset($_SESSION['errors']))
       $myusername = mysqli_real_escape_string($db,$_POST['username']);
       $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
       
-      $sql = "SELECT id FROM login WHERE loginId = '$myusername' and pswd = '".md5($mypassword)."' ";
+      $sql = "SELECT * FROM login WHERE loginId = '$myusername' and pswd = '".md5($mypassword)."' ";
       $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+     // $row = mysqli_fetch_assoc($result,MYSQLI_ASSOC);
       
       $count = mysqli_num_rows($result);
       
@@ -32,6 +33,11 @@ if (isset($_SESSION['errors']))
 		
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
+         while ($rows = $result->fetch_assoc()) {
+            $_SESSION['role'] = $rows['userType'];
+        }
+       // echo  $_SESSION['role'];exit;
+        
          /* Redirect browser */
 		header("Location: admin.php"); 
       }else {
