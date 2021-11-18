@@ -1,5 +1,61 @@
 <?php include 'admin-header.php';
- include 'database.php';?>
+ include 'database.php';
+
+
+if(isset($_POST['save_judges']))
+{
+    
+    $prodId = $_POST['prodId'];
+    $jedgeIdlist = $_POST['jedgeId'];
+    $roundNumber = $_POST['roundNumber'];
+    
+    foreach ($jedgeIdlist as $value) {
+        $int = $value;
+        $query = "INSERT INTO projects_vs_jedges (projectId,jedgeId,roundNumber) VALUES ('$prodId', '$int', '$roundNumber')";
+        $query_run = mysqli_query($conn, $query);
+    }
+    
+    
+       
+        
+    
+    if($query_run)
+    {
+        $_SESSION['status'] = "Inserted Succesfully";
+        echo "alert(Succesfully)";
+        header("Location: admin-assign-projects.php");
+    }
+    else
+    {
+       // echo "alert(NoSuccesfully)";
+        $_SESSION['status'] = "Not Inserted";
+        header("Location: admin-assign-projects.php");
+    }
+}
+
+
+
+
+
+?>
+
+
+<script language=“JavaScript”>
+
+$("#assignProjects").validate({
+                                rules:{
+                                       "jedgeId[]": "required"
+                                    },
+                                messages:{
+                                        "jedgeId[]": "Select this"
+                                    }
+                            });
+
+
+</script>
+
+
+
 
 <body id="page-top">
 
@@ -122,28 +178,29 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                   
                                                         $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
                                                         ?>
-                                                    <form>
+                                                    <form action="admin-assign-projects.php" method="POST"  id="assignProjects">
+                                                        <input type="text" class="form-control form-control-add" id="prodId"
+                                                        name="prodId" value="<?php echo $row["id"]; ?>" hidden>
+                                                        <input type="text" class="form-control form-control-add" id="roundNumber"
+                                                        name="roundNumber" value= "1"  hidden>
+                                                        <div class="form-group">
+                                                        <label for="exampleFormControlSelect2">Assign Judges</label>
+
+                                                        Select:<select size="12"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="exampleFormControlSelect2">
+        
+                                                            <?php
+                                                                // Using database connection file here
+                                                                $judgelist = mysqli_query($conn, "SELECT id, firstName, lastName From login");  // Use select query here 
+
+                                                                while($data = mysqli_fetch_array($judgelist))
+                                                                {
+                                                                    echo "<option value='". $data['id'] ."'>" .$data['firstName'].$data['lastName'] ."</option>";  // displaying data in option menu
+                                                                }	
+                                                            ?>  
+                                                    </select>                                           
+                                                        </div>
                                                        
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Round text</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
-                                                        </div>
-                                                        
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlSelect2">Assign Judges</label>
-                                                            <select multiple class="form-control" id="exampleFormControlSelect2">
-                                                            <option>Jonshon</option>
-                                                            <option>David</option>
-                                                            <option>Ram</option>
-                                                            <option>David</option>
-                                                            <option>Anand</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                                        </div>
-                                                        <input class="btn btn-primary" type="submit" name="save" value="Add">
+                                                        <input class="btn btn-primary" type="submit" name="save_judges" value="Add">
                                        
                                                     </form> 
                                                     </div>
