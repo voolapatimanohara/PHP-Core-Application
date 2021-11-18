@@ -121,6 +121,11 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
+                                                  <?php  
+                                                 
+                                                  
+                                                        $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
+                                                        ?>
                                                     <form>
                                                        
                                                         <div class="form-group">
