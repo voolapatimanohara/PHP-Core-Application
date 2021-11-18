@@ -29,16 +29,16 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                  <!--  <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Projects</h1>
 
-                    </div>
+                    </div> -->
 
                     <!-- Content Row -->
                     <div class="row">
                         <?php 
 
-$totalPro = "SELECT * from projects";
+$totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
   
     if ($result = mysqli_query($conn, $totalPro)) {
     // Return the number of rows in result set
@@ -146,8 +146,8 @@ $totalPro = "SELECT * from projects";
 
   $project_list= "SELECT * FROM projects";
   $result = $conn->query($project_list);
+
   ?>
-                            <h1 class="h3 mb-2 text-gray-800">Projects List</h1>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">

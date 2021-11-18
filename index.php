@@ -1,4 +1,16 @@
-
+<?php
+if (isset($_SESSION['errors']))
+{
+    session_destroy();
+}else{
+	session_start();
+	
+	if (isset($_SESSION['login_user'])) {
+		//echo $_SESSION['login_user'];exit;
+	header("Location: admin.php");
+	}
+}
+?>
 <?php
 	
 	include("config.php");

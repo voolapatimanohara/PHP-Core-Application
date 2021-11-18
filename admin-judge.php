@@ -1,12 +1,12 @@
 <?php include 'admin-header.php';?>
 <?php include 'database.php';
-$totalJudgescount = "SELECT userType from login where userType  GROUP BY userType ";
+//$totalJudgescount = "SELECT userType from login where userType GROUP BY userType ";
   
-if ($jdresult = mysqli_query($conn, $totalJudgescount)) {
+//if ($jdresult = mysqli_query($conn, $totalJudgescount)) {
 // Return the number of rows in result set
-$judgescount = mysqli_num_rows( $jdresult );
+//$judgescount = mysqli_num_rows( $jdresult );
 
-}
+//}
 
 
 ?>
@@ -39,15 +39,15 @@ $judgescount = mysqli_num_rows( $jdresult );
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Judge Dashboard</h1>
+                  <!--  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Judges</h1>
                         
-                    </div>
+                    </div> -->
 
                     <!-- Content Row -->
-                    <div class="row">
+                   <!-- <div class="row">
 
-                        <!-- Total Projects  -->
+                       
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -55,7 +55,7 @@ $judgescount = mysqli_num_rows( $jdresult );
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Jadges</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $judgescount?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php //echo $judgescount?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fas fa-gavel fa-2x text-gray-300"></i>
@@ -65,7 +65,7 @@ $judgescount = mysqli_num_rows( $jdresult );
                             </div>
                         </div>                        
 
-                    </div>                 
+                    </div>     -->            
                     <!-- Content Row -->
                     <div class="row">
 
@@ -79,20 +79,19 @@ $judgescount = mysqli_num_rows( $jdresult );
                                 <div class="col-lg-6">
                                 <div class="p-5">
                                    
-                                    <form class="user">
+                                    <form name="judges" class="add-project user" action="insert_jedges.php" method="post">
                                         <div class="form-group">
                                             First Name
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control" name="judge_first_name"
                                                 id="judge_first_name" aria-describedby="Name"
                                                 placeholder="Enter Judge First Name..." required>
                                         </div>
                                         <div class="form-group">
                                             Last Name
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control" name="judge_last_name"
                                                 id="judge_last_name" placeholder="Enter Judge Last Name" required>
                                         </div>
-                                        <input class="btn btn-primary" type="submit" name="save" value="Add">
-                                        
+                                        <input class="btn btn-primary" type="submit" name="save" value="Add">                                        
                                        
                                     </form>
                                    
@@ -105,12 +104,12 @@ $judgescount = mysqli_num_rows( $jdresult );
                     </div>
 
                 </div>
-<?php $judge_list= "SELECT * FROM login";
+<?php $judge_list= "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
   $judgeresult = $conn->query($judge_list);
   ?>
                 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Judges </h6>
+        <h6 class="m-0 font-weight-bold text-primary">Judges</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -161,7 +160,6 @@ echo "</tbody></table>";?>
                         <div class="container-fluid">
                       
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Jadges List</h1>
 
 
 
@@ -169,14 +167,14 @@ echo "</tbody></table>";?>
 <!-- Page Heading -->
 <?php
 
-  $judge_list= "SELECT * FROM login";
+  $judge_list= "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
   $result = $conn->query($judge_list);
   ?>
 
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Jadges </h6>
+        <h6 class="m-0 font-weight-bold text-primary">Jadges Details</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
