@@ -102,18 +102,19 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                 <td>".$row["sponsor"]."</td>
                <td>" .substr($row["pr_description"],0,25)."..</td>
                 <td>".$row["projectType"]."</td>
-                <td> <a href='#' data-toggle='modal' data-target='#finalProjectModel_".$row["id"]."'>
+                <td> <a href='#' data-toggle='modal' data-target='#judgefinalProjectModel_".$row["id"]."'>
                 <i class='fa fa-external-link-alt'></i></a> </td>
 
    
                 </tr>"?>
-                                        <div class="modal fade" id="finalProjectModel_<?php echo $row['id'] ?>"
+                                        <div class="modal fade" id="judgefinalProjectModel_<?php echo $row['id'] ?>"
                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                    <h3>Final</h3>
+                                                    <h5 class="modal-title" id="assignModalLabel">
+                                                            <?php echo $row["title"]; ?></h5>
                                                         
                                                         <button class="close" type="button" data-dismiss="modal"
                                                             aria-label="Close">
@@ -121,19 +122,18 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    <h5 class="modal-title" id="finalModalLabel">
-                                                            <?php echo $row["title"]; ?></h5>
+                                                    
                                                     <form>
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Question-1</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder ="Answer-01">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Question-2</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder ="Answer-02">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlSelect1">Add Markes</label>
+                                                            <label for="exampleFormControlSelect1">Add Marks</label>
                                                             <select class="form-control" id="exampleFormControlSelect1">
                                                             <option>1</option>
                                                             <option>2</option>
@@ -144,18 +144,13 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         </div>
                                                         
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                            <label for="exampleFormControlTextarea1">Remarks</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Remarkss</textarea>
                                                         </div>
-                                                        <input class="btn btn-primary" type="submit" name="save" value="Add">
-    
+                                                        
                                                     </form>                                                 
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="button"
-                                                            data-dismiss="modal">Close</button>
-
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

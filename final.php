@@ -113,7 +113,8 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                    <h3>Final</h3>
+                                                    <h5 class="modal-title" id="assignModalLabel">
+                                                            <?php echo $row["title"]; ?></h5>
                                                         
                                                         <button class="close" type="button" data-dismiss="modal"
                                                             aria-label="Close">
@@ -121,41 +122,30 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    <h5 class="modal-title" id="finalModalLabel">
-                                                            <?php echo $row["title"]; ?></h5>
+                                                    
                                                     <form>
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Question-1</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" value ="Answer-01" readonly>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Question-2</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" value ="Answer-02" readonly>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlSelect1">Add Markes</label>
-                                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
-                                                            </select>
+                                                            <label for="exampleFormControlSelect1">Marks</label>
+                                                            <input type="text" class="form-control" id="exampleFormControlInput1" value ="50" readonly>
+                                                     
                                                         </div>
                                                         
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                            <label for="exampleFormControlTextarea1">Remarks</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"readonly>Remarkss</textarea>
                                                         </div>
-                                                        <input class="btn btn-primary" type="submit" name="save" value="Add">
-    
+                                                        
                                                     </form>                                                 
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="button"
-                                                            data-dismiss="modal">Close</button>
-
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
