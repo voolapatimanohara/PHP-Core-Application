@@ -54,7 +54,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Jadges</div>
+                                                Total Judges</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php //echo $judgescount?></div>
                                         </div>
                                         <div class="col-auto">
@@ -84,12 +84,12 @@
                                             First Name
                                             <input type="text" class="form-control" name="judge_first_name"
                                                 id="judge_first_name" aria-describedby="Name"
-                                                placeholder="Enter Judge First Name..." required>
+                                                placeholder="Enter First Name..." required>
                                         </div>
                                         <div class="form-group">
                                             Last Name
                                             <input type="text" class="form-control" name="judge_last_name"
-                                                id="judge_last_name" placeholder="Enter Judge Last Name" required>
+                                                id="judge_last_name" placeholder="Enter Last Name" required>
                                         </div>
                                         <input class="btn btn-primary" type="submit" name="save" value="Add">                                        
                                        
@@ -174,7 +174,7 @@ echo "</tbody></table>";?>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Jadges Details</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Judges Details</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
