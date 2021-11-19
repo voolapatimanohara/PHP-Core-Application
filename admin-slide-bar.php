@@ -1,6 +1,4 @@
-<?php
-$usertype = "jude";
-?>
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -38,8 +36,8 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="admin-judge.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Jedges</span></a>
+                <i class="fas fas fa-gavel"></i>
+                <span>Judges</span></a>
         </li>
 
         <!-- Divider -->
@@ -51,7 +49,7 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="admin-projects.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fas fa-fw fa-project-diagram"></i>
                 <span>Projects</span></a>
         </li>
 
@@ -64,8 +62,8 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="admin-assign-projects.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Assign Project to Jedges</span></a>
+            <i class="fas fa-user-plus"></i>
+                <span>Assign Project to Judges</span></a>
         </li>
 
         <!-- Divider -->
@@ -77,7 +75,7 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="round-1.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fas fa-money-bill-alt"></i>
                 <span>Round 1</span></a>
         </li>
 
@@ -90,8 +88,8 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="semi-final.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Semi-finals</span></a>
+            <i class="fas fa-tasks"></i>
+                <span>Semi-Finals</span></a>
         </li>
 
         <!-- Divider -->
@@ -103,7 +101,7 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="final.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
         <!----------------------------------  Admin Menu End ----------------------->
@@ -132,7 +130,7 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="jedge-round-1.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-money-bill-alt"></i>
                 <span>Round 1</span></a>
         </li>
         <!-- Divider -->
@@ -144,8 +142,8 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="jedge-semi-final.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Semi-finals</span></a>
+            <i class="fas fa-tasks"></i>
+                <span>Semi-Finals</span></a>
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
@@ -156,11 +154,11 @@ $usertype = "jude";
                                 echo 'inactive';
                             } ?>">
             <a class="nav-link" href="jedge-final.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
 
-        <!--------- Jedge Menu End --------------------------->
+        <!--------- Judge Menu End --------------------------->
     <?php
     }
     ?>
