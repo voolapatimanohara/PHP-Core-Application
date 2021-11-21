@@ -40,19 +40,7 @@ if(isset($_POST['save_judges']))
 ?>
 
 
-<script language=“JavaScript”>
 
-$("#assignProjects").validate({
-                                rules:{
-                                       "jedgeId[]": "required"
-                                    },
-                                messages:{
-                                        "jedgeId[]": "Select this"
-                                    }
-                            });
-
-
-</script>
 
 
 
@@ -98,7 +86,19 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
     
 }
 ?>
-
+<form id="mySuperCoolForm">
+        <fieldset>
+            <legend>Select some stuff</legend>
+            <select name="things" multiple="multiple">
+                <option>thing 1</option>
+                <option>thing 2</option>
+                <option>thing 3</option>
+                <option>thing 4</option>
+                <option>thing 5</option>
+            </select>
+            <input type="submit" />
+        </fieldset>
+    </form>
  
 
 

@@ -11620,3 +11620,46 @@ footer a:hover, footer a:active, footer a:focus {
     max-width: 17rem;
   }
 }
+
+/*Praveen from Css*/
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      text-align: left;
+      font-family: sans-serif;
+    }
+
+    /* form {
+      border: 1px solid #1A33FF;
+      background: #ecf5fc;
+      padding: 40px 50px 45px;
+    } */
+
+    .form-control:focus {
+      border-color: #000;
+      box-shadow: none;
+    }
+
+    label {
+      font-weight: 600;
+    }
+    
+    .error {
+      color: red !important;
+      font-weight: 400;
+      display: block;
+      padding: 6px 0;
+      font-size: 14px !important;
+       
+    }
+
+    .form-control.error {
+      border-color: red;
+      padding: .375rem .75rem;
+    }    
+    .sidebar-dark .nav-item.active .nav-link {
+      color: #4e73df !important;
+      /* border: 2px solid; */
+      background: #fff !important;
+    }
