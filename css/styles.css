@@ -11651,15 +11651,32 @@ footer a:hover, footer a:active, footer a:focus {
       display: block;
       padding: 6px 0;
       font-size: 14px !important;
+      width: 100% !important;
        
     }
 
     .form-control.error {
       border-color: red;
       padding: .375rem .75rem;
+      width: 100% !important;
     }    
     .sidebar-dark .nav-item.active .nav-link {
       color: #4e73df !important;
       /* border: 2px solid; */
       background: #fff !important;
+    }
+
+    .sidebar-dark .nav-item.active .nav-link i {
+      color: #2937f0 !important;
+    }
+    .card-header{
+      background-color: #272b53 !important;
+      border-bottom: 1px solid #272b53 !important;
+    }
+    .modal-form-header{
+      background-color: #272b53 !important;
+      border-bottom: 1px solid #272b53 !important;
+    }
+    .modal-form{
+      border: 1px solid #272b53 !important;
     }
