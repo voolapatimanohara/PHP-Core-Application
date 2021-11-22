@@ -68,7 +68,7 @@
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Add Judge</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Add Judge</h6>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="p-5">
@@ -103,7 +103,7 @@
   ?>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Judges</h6>
+                            <h6 class="m-0 font-weight-bold text-white">Judges</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -169,7 +169,7 @@ echo "</tbody></table>";?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Judges Details</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Judges Details</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -267,7 +267,6 @@ echo "</tbody></table>";?>
             <?php include 'admin-footer.php';?>
             <script>
             setTimeout(function() {
-
                 // Closing the alert
                 $('#alert').alert('close');
             }, 5000);

@@ -86,19 +86,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
     
 }
 ?>
-<form id="mySuperCoolForm">
-        <fieldset>
-            <legend>Select some stuff</legend>
-            <select name="things" multiple="multiple">
-                <option>thing 1</option>
-                <option>thing 2</option>
-                <option>thing 3</option>
-                <option>thing 4</option>
-                <option>thing 5</option>
-            </select>
-            <input type="submit" />
-        </fieldset>
-    </form>
+
  
 
 
@@ -114,7 +102,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects List </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Projects List </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -155,7 +143,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                <td>" .substr($row["pr_description"],0,25)."..</td>
                 <td>".$row["projectType"]."</td>
                 <td> <a href='#' data-toggle='modal' data-target='#assignProjectModel_".$row["id"]."'>
-                <i class='fas fa-eye'></i></a> </td>
+                <i class='fas fa-share-square'></i></a> </td>
 
    
                 </tr>"?>
@@ -163,30 +151,34 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            <?php echo $row["title"]; ?></h5>
-                                                        <button class="close" type="button" data-dismiss="modal"
+                                                <div class="modal-content modal-form">
+                                                    <div class="modal-header modal-form-header">
+                                                        <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                        Assign Judges</h5>
+                                                        <button class="close text-white" type="button" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
-                                                    </div>
+                                                </div>
                                                     <div class="modal-body">
-                                                  <?php  
-                                                 
-                                                  
+                                                   
+                                                  <?php 
                                                         $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
                                                         ?>
-                                                    <form action="admin-assign-projects.php" method="POST"  id="assignProjects">
-                                                        <input type="text" class="form-control form-control-add" id="prodId"
-                                                        name="prodId" value="<?php echo $row["id"]; ?>" hidden>
-                                                        <input type="text" class="form-control form-control-add" id="roundNumber"
-                                                        name="roundNumber" value= "1"  hidden>
+                                                    <form  name="assign-projects-form"  enctype="multipart/form-data" action="admin-assign-projects.php" method="POST"  id="assignProjects">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["title"]; ?>"readonly>
+                                                        
+                                                            <input type="text" class="form-control form-control-add" id="prodId"
+                                                            name="prodId" value="<?php echo $row["id"]; ?>" hidden>
+                                                            <input type="text" class="form-control form-control-add" id="roundNumber"
+                                                            name="roundNumber" value= "1"  hidden>
+                                                        </div>
                                                         <div class="form-group">
                                                         <label for="exampleFormControlSelect2">Assign Judges</label>
 
-                                                        Select:<select size="12"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="exampleFormControlSelect2">
+                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="jedgeId">
         
                                                             <?php
                                                                 // Using database connection file here
@@ -232,5 +224,34 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                     <?php include 'admin-footer.php';?>
 
 </body>
+<script>
+    setTimeout(function() {
+        // Closing the alert
+        $('#alert_assign').alert('close');
+    }, 5000);
+    $(function() {
 
+
+        $("form[name='assign-projects-form']").validate({
+
+            rules: {
+                jedgeId: "required",
+                
+                jedgeId: {
+                    required: true
+                }
+            },
+
+            messages: {
+                judgefirstName: "Please Select 2 judges."
+                
+            },
+            submitHandler: function(form) {
+                form.submit();
+
+            }
+
+        });
+    });
+    </script>
 </html>
