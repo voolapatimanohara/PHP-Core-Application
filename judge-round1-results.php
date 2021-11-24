@@ -54,15 +54,13 @@ include 'database.php'; ?>
                             <!-- Page Heading -->
                             <?php
 
-                            $project_list = "SELECT projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                            $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
   where 
   projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId ORDER BY projects_vs_jedges.modifiedOn DESC";
                             $result = $conn->query($project_list);
-
                             ?>
-
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Round -I Results </h6>
@@ -96,6 +94,13 @@ include 'database.php'; ?>
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
+                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                                                INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+                                                INNER JOIN questions on results.questionId=questions.id 
+                                                where 
+                                                projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+                                                $questiojns_result = $conn->query($questiojns_list);
+
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
                 <td>" . $row["title"] . "</td>
@@ -103,7 +108,7 @@ include 'database.php'; ?>
                 <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
-                <i class='fa fa-external-link-alt'></i></a> </td>
+                <i class='fa fa-eye'></i></a> </td>
              
    
                 </tr>" ?>
@@ -118,35 +123,25 @@ include 'database.php'; ?>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <h5 class="modal-title" id="assignModalLabel">
-                                                                    <?php echo $row["title"]; ?></h5>
-                                                                <form>
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlInput1">Question-1</label>
-                                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlInput1">Question-2</label>
-                                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Add Markes</label>
-                                                                        <select class="form-control" id="exampleFormControlSelect1">
-                                                                            <option>1</option>
-                                                                            <option>2</option>
-                                                                            <option>3</option>
-                                                                            <option>4</option>
-                                                                            <option>5</option>
-                                                                        </select>
-                                                                    </div>
 
+                                                                <?php
+                                                                // output data of each row
+                                                                while ($ques = $questiojns_result->fetch_assoc()) {
+                                                                ?>
                                                                     <div class="form-group">
-                                                                        <label for="exampleFormControlTextarea1">Example textarea</label>
-                                                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                                                    </div>
-                                                                    <input class="btn btn-primary" type="submit" name="save" value="Add">
+                                                                        <h5 class="modal-title" id="assignModalLabel">
+                                                                            <?php echo $ques["question"]; ?></h5>
+                                                                        <label for="exampleFormControlInput1"> <?php echo $ques["description"]; ?></label>
+                                                                        <label for="exampleFormControlInput1"> <?php echo $ques["marks"]; ?></label>
 
-                                                                </form>
+                                                                    </div>
+                                                                <?php } ?>
+                                                                <div class="form-group">
+                                                                    <h5 class="modal-title" id="assignModalLabel">Remarks</h5>
+                                                                    <label for="exampleFormControlTextarea1">
+                                                                        <?php echo $row["remarks"]; ?></label>
+                                                                </div>
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
