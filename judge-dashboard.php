@@ -1,11 +1,27 @@
 <?php include 'admin-header.php';?>
 <?php include 'database.php';
 
+
+
 $totalPro = "SELECT * from projects";
   
     if ($result = mysqli_query($conn, $totalPro)) {
     // Return the number of rows in result set
     $projectcount = mysqli_num_rows( $result );
+    
+}
+$techtotalPro = "SELECT * from projects";
+  
+    if ($result = mysqli_query($conn, $techtotalPro)) {
+    // Return the number of rows in result set
+    $techtotalProcount = mysqli_num_rows( $result );
+    
+}
+$bustotalPro = "SELECT * from projects";
+  
+    if ($result = mysqli_query($conn, $bustotalPro)) {
+    // Return the number of rows in result set
+    $bustotalProcount = mysqli_num_rows( $result );
     
 }
 $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
@@ -136,8 +152,9 @@ $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
 
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
+                               
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Projects</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">Round-I <span
@@ -168,7 +185,7 @@ $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">About Us</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">About Us</h6>
                                 </div>
                                 <div class="card-body">
                                    

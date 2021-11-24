@@ -162,12 +162,60 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         $totalJudges = "SELECT userType from login where userType  GROUP BY userType ";
                                                         ?>
                                                     <form  name="assign-projects-form"  enctype="multipart/form-data" action="admin-assign-projects.php" method="POST"  id="assignProjects">
-                                                        <div class="form-group">
+                                                        
+                                                    
+                                                    <div class="form-group row">
+
+                                                        <div class="col-sm-6 add-item">
+                                                            <label for="text">Project Names</label>
                                                             <input type="text" class="form-control form-control-add" 
                                                             name="" value="<?php echo $row["title"]; ?>"readonly>
+                                                        </div>
+                                                        <div class="col-sm-6 add-item">
+                                                            <label for="text">Program</label>
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["program"]; ?>"readonly>
+                                                        </div>
+                                                        <div class="col-sm-6 add-item">
+                                                            <label for="text">Names</label>
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["names"]; ?>"readonly>
+                                                        </div>
+                                                        <div class="col-sm-6 add-item">
+                                                            <label for="text">Mentor</label>
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["mentor"]; ?>"readonly>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group row">
+
+                                                        <div class="col-sm-6 add-item">
+                                                            <label for="text">URL</label>
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["pr_url"]; ?>"readonly>
+                                                        </div>
+                                                        <div class="col-sm-6 add-item">
+                                                            <label for="text">Project Type</label>
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["projectType"]; ?>"readonly>
+                                                        </div>
                                                         
+
+                                                    </div>
+                                                    
+                                                        <div class="form-group row">
+                                                        <div class="col-sm-6 add-item">
+                                                        <label for="text">Sponsor</label>
+                                                            <input type="text" class="form-control form-control-add" 
+                                                            name="" value="<?php echo $row["sponsor"]; ?>"readonly>
+                                                        </div>
+                                                        <div class="col-sm-6 add-item">
+                                                            
                                                             <input type="text" class="form-control form-control-add" id="prodId"
                                                             name="prodId" value="<?php echo $row["id"]; ?>" hidden>
+                                                        </div>
+                                                        <div class="col-sm-6 add-item">
                                                             <input type="text" class="form-control form-control-add" id="roundNumber"
                                                             name="roundNumber" value= "1"  hidden>
                                                         </div>
