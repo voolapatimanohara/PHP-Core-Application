@@ -1,5 +1,8 @@
 <?php include 'admin-header.php';
- include 'database.php';?>
+ include 'database.php';
+ $loginId = $_SESSION['id'];
+ //echo   $loginId;
+ ?>
 
 <body id="page-top">
 
@@ -38,11 +41,11 @@
                     <div class="row">
                         <?php 
 
-$totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
+$totalPro = "SELECT * from projects_vs_jedges where jedgeId = $loginId  ORDER BY modifiedOn DESC";
   
-    if ($result = mysqli_query($conn, $totalPro)) {
+    if ($result1 = mysqli_query($conn, $totalPro)) {
     // Return the number of rows in result set
-    $projectcount = mysqli_num_rows( $result );
+    $jdprojectcount = mysqli_num_rows( $result1 );
     
 }
 ?>
@@ -55,8 +58,10 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 ORDER BY modifiedOn DESC";
+  $project_list= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $loginId and projects_vs_jedges.roundNumber=1 ORDER BY modifiedOn DESC";
   $result = $conn->query($project_list);
+
+ 
 
   ?>
 
