@@ -1,4 +1,6 @@
-<?php $userlist= "SELECT * FROM login";
+<?php 
+$uid= $_SESSION['id'];
+$userlist= "SELECT * FROM login where id = $uid ";
     $result = $conn->query($userlist);
     while($row = $result->fetch_assoc()) {
 
