@@ -162,7 +162,7 @@ $totalJudges = "SELECT * from login where userType= '1'";
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Projects</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">Round-I <span
@@ -193,7 +193,7 @@ $totalJudges = "SELECT * from login where userType= '1'";
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">About Us</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">About Us</h6>
                                 </div>
                                 <div class="card-body">
                                    

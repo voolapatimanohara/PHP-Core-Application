@@ -36,6 +36,7 @@ if (isset($_SESSION['errors']))
         
          while ($rows = $result->fetch_assoc()) {
             $_SESSION['role'] = $rows['userType'];
+            $_SESSION['id'] = $rows['id'];
            
             
         }
