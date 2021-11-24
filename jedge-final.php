@@ -1,5 +1,6 @@
 <?php include 'admin-header.php';
- include 'database.php';?>
+ include 'database.php';
+ $loginId = $_SESSION['id']; ?>
 
 <body id="page-top">
 
@@ -55,7 +56,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=3 ORDER BY modifiedOn DESC";
+  $project_list= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=$loginId and projects_vs_jedges.roundNumber=3 ORDER BY modifiedOn DESC";
   $result = $conn->query($project_list);
 
   ?>

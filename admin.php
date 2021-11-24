@@ -1,45 +1,34 @@
 <?php include 'admin-header.php';?>
 <?php include 'database.php';
+ $loginId = $_SESSION['id'];
 
-$totalPro = "SELECT * from projects";
+$totalPro = "SELECT * from projects_vs_jedges where jedgeId = $loginId  ORDER BY modifiedOn DESC";
   
-    if ($result = mysqli_query($conn, $totalPro)) {
+    if ($result1 = mysqli_query($conn, $totalPro)) {
     // Return the number of rows in result set
-    $projectcount = mysqli_num_rows( $result );
+    $jdprojectcount = mysqli_num_rows( $result1 );
     
 }
-$totalBusinPro = "SELECT * from projects where projectType= 'Technology'";
-  
-    if ($result = mysqli_query($conn, $totalBusinPro)) {
-        $projectBusincount = mysqli_num_rows( $result );
-    }
-$totalTechPro = "SELECT * from projects where projectType= 'Business'";
-  
-    if ($result = mysqli_query($conn, $totalTechPro)) {
-        
-        $projectTechcount = mysqli_num_rows( $result );        
-    }
-$totalJudges = "SELECT * from login where userType= '1'";
-  
-    if ($result2 = mysqli_query($conn, $totalJudges)) {
-        $judgescount = mysqli_num_rows( $result2 ); 
-    }
-    $totalRound1Projects = "SELECT * from projects_vs_jedges where roundNumber= '1'";
-  
-    if ($result = mysqli_query($conn, $totalRound1Projects)) {
-        $Round1Projects = mysqli_num_rows( $result ); 
-    }
-    $totalsemifinalProjects = "SELECT * from projects_vs_jedges where roundNumber= '2'";
-  
-    if ($result = mysqli_query($conn, $totalsemifinalProjects)) {
-        $RoundsemifinalProjects = mysqli_num_rows( $result ); 
-    }
-    $totalfinalProjects = "SELECT * from projects_vs_jedges where roundNumber= '3'";
-  
-    if ($result = mysqli_query($conn, $totalfinalProjects)) {
-        $RoundfinalProjects = mysqli_num_rows( $result ); 
-    }
 
+$totalRound1Pro= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $loginId and projects_vs_jedges.roundNumber=1 ORDER BY modifiedOn DESC";
+    
+     if ($result2 = mysqli_query($conn, $totalRound1Pro)) {
+    // Return the number of rows in result set
+    $totalRound1count = mysqli_num_rows( $result2);
+}
+$totalsemifinalPro= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $loginId and projects_vs_jedges.roundNumber=2 ORDER BY modifiedOn DESC";
+    
+     if ($result3 = mysqli_query($conn, $totalsemifinalPro)) {
+    // Return the number of rows in result set
+    $totalsemifinalcount = mysqli_num_rows( $result3);
+}
+
+$totalfinalPro= "SELECT * from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $loginId and projects_vs_jedges.roundNumber=3 ORDER BY modifiedOn DESC";
+    
+     if ($result4 = mysqli_query($conn, $totalfinalPro)) {
+    // Return the number of rows in result set
+    $totalfinalcount = mysqli_num_rows( $result4);
+}
 
 ?>
     <!-- Page Wrapper -->
@@ -84,7 +73,7 @@ $totalJudges = "SELECT * from login where userType= '1'";
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Projects</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $projectcount?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $jdprojectcount?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-project-diagram fa-2x text-gray-300"></i>
@@ -94,63 +83,6 @@ $totalJudges = "SELECT * from login where userType= '1'";
                             </div>
                         </div>
 
-                        <!-- No Of Judges Card  -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                No Of Judges</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $judgescount?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-gavel fa-2x text-gray-300"></i> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-						<!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Technical Project
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $projectTechcount;?></div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-cogs fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Business Projects</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $projectBusincount;?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-business-time fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>                 
                     <!-- Content Row -->
@@ -161,28 +93,29 @@ $totalJudges = "SELECT * from login where userType= '1'";
 
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
+                               
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-white">Projects</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">Round-I <span
-                                            class="float-right"><?php echo $Round1Projects; ?>%</span></h4>
+                                            class="float-right"><?php echo $totalRound1count; ?>%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $Round1Projects; ?>%"
-                                            aria-valuenow="<?php echo $Round1Projects;?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Semi Final<span
-                                            class="float-right"><?php echo $RoundsemifinalProjects; ?>%</span></h4>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $totalRound1count; ?>%"
+                                            aria-valuenow="<?php echo $totalRound1count; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    <h4 class="small font-weight-bold">Semi Final <span
+                                            class="float-right"><?php echo $totalsemifinalcount; ?>%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $RoundsemifinalProjects; ?>%"
-                                            aria-valuenow="<?php echo $RoundsemifinalProjects;?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $totalsemifinalcount; ?>%"
+                                            aria-valuenow="<?php echo $totalsemifinalcount; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                     <h4 class="small font-weight-bold">Final <span
-                                            class="float-right"><?php echo $RoundfinalProjects;?>%</span></h4>
+                                            class="float-right"><?php echo $totalfinalcount; ?>%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: <?php echo $RoundfinalProjects;?>%"
-                                            aria-valuenow="<?php echo $RoundfinalProjects;?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                        <div class="progress-bar" role="progressbar" style="width: <?php echo $totalfinalcount; ?>%"
+                                            aria-valuenow="<?php echo $totalfinalcount; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                 </div>
                             </div>                         
 
