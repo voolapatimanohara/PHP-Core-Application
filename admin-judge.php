@@ -1,15 +1,8 @@
 <?php include 'admin-header.php';?>
 <?php include 'database.php';
-//$totalJudgescount = "SELECT userType from login where userType GROUP BY userType ";
-  
-//if ($jdresult = mysqli_query($conn, $totalJudgescount)) {
-// Return the number of rows in result set
-//$judgescount = mysqli_num_rows( $jdresult );
-
-//}
-
 
 ?>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -30,7 +23,7 @@
 
                     <!-- Topbar Navbar -->
                     <?php include 'admin-nav-toolbar.php';?>
-                   
+
 
                 </nav>
                 <!-- End of Topbar -->
@@ -38,35 +31,36 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                  <!--  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Judges</h1>
-                        
-                    </div> -->
+                    
 
-                    <!-- Content Row -->
-                   <!-- <div class="row">
+                    <?php 
+ if(!empty($_POST["save"])) {
 
-                       
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Jadges</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php //echo $judgescount?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fas fa-gavel fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
+		$fname = $_POST["judgefirstName"];
+		$lname = $_POST["judgelastName"];
+			
+		// Store contactor data in database
+		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd)
+		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($fname."_".$lname)."')");
 
-                    </div>     -->            
-                    <!-- Content Row -->
+		if(!$sql) {
+		  die("MySQL query failed.");
+		} else {
+		  $response = array(
+			"status" => "alert-success",
+			"message" => "New Judge Added succesfully ."
+		  );     
+		           
+		}
+	
+  }  
+
+        
+                    if(!empty($response)) {?>
+                    <div id="alert" class="alert text-center <?php echo $response['status']; ?>" role="alert">
+                        <?php echo $response['message']; ?>
+                    </div>
+                    <?php }?>
                     <div class="row">
 
                         <div class="col-lg-12 mb-6">
@@ -74,46 +68,46 @@
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Add Judge</h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Add Judge</h6>
                                 </div>
                                 <div class="col-lg-6">
-                                <div class="p-5">
-                                   
-                                    <form name="judges" class="add-project user" action="insert_jedges.php" method="post">
-                                        <div class="form-group">
-                                            First Name
-                                            <input type="text" class="form-control" name="judge_first_name"
-                                                id="judge_first_name" aria-describedby="Name"
-                                                placeholder="Enter Judge First Name..." required>
-                                        </div>
-                                        <div class="form-group">
-                                            Last Name
-                                            <input type="text" class="form-control" name="judge_last_name"
-                                                id="judge_last_name" placeholder="Enter Judge Last Name" required>
-                                        </div>
-                                        <input class="btn btn-primary" type="submit" name="save" value="Add">                                        
-                                       
-                                    </form>
-                                   
+                                    <div class="p-5">
+
+                                        <form name="judges_form" id="judges_form" class="user"
+                                            enctype="multipart/form-data" method="post">
+                                            <div class="form-group">
+                                                First Name
+                                                <input type="text" class="form-control" name="judgefirstName"
+                                                    id="judgefirstName" placeholder="Enter First Name">
+                                            </div>
+                                            <div class="form-group">
+                                                Last Name
+                                                <input type="text" class="form-control" name="judgelastName"
+                                                    id="lastName" placeholder="Enter Last Name">
+                                            </div>
+                                            <input class="btn btn-primary" type="submit" name="save" value="Add">
+
+                                        </form>
+
+                                    </div>
                                 </div>
-                            </div>                         
+
+                            </div>
+
 
                         </div>
 
-                    
                     </div>
-
-                </div>
-<?php $judge_list= "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
+                    <?php $judge_list= "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
   $judgeresult = $conn->query($judge_list);
   ?>
-                <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Judges</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-        <?php  if ($judgeresult->num_rows > 0) {
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-white">Judges</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <?php  if ($judgeresult->num_rows > 0) {
 
 echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
 
@@ -142,43 +136,44 @@ echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacin
     <td>".$row["lastName"]."</td>
     
     </tr>";?>
-    
-    
 
-<?php }
+
+
+                                <?php }
 echo "</tbody></table>";?>
 
 
-<?php } ?>
-            
-        </div>
-    </div>
-</div>
+                                <?php } ?>
+
+                            </div>
+                        </div>
+                    </div>
 
 
-                <div class="row"> <!-- Content Column -->
+                    <div class="row">
+                        <!-- Content Column -->
                         <div class="container-fluid">
-                      
-<!-- Page Heading -->
+
+                            <!-- Page Heading -->
 
 
 
 
-<!-- Page Heading -->
-<?php
+                            <!-- Page Heading -->
+                            <?php
 
   $judge_list= "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
   $result = $conn->query($judge_list);
   ?>
 
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Jadges Details</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-        <?php  if ($result->num_rows > 0) {
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-white">Judges Details</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <?php  if ($result->num_rows > 0) {
 
             echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
             
@@ -219,50 +214,92 @@ echo "</tbody></table>";?>
 
    
                 </tr>";?>
-                <div class="modal fade" id="viewjudgeModel_<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"><?php echo $row["firstName"].$row["lastName"]; ?></h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h5><?php echo $row["firstName"]; ?></h5>
-                            <p><?php echo $row["lastName"]; ?></p></div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-           
-            <?php }
+                                        <div class="modal fade" id="viewjudgeModel_<?php echo $row['id']; ?>"
+                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            <?php echo $row["firstName"].$row["lastName"]; ?></h5>
+                                                        <button class="close" type="button" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5><?php echo $row["firstName"]; ?></h5>
+                                                        <p><?php echo $row["lastName"]; ?></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary" type="button"
+                                                            data-dismiss="modal">Close</button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <?php }
             echo "</tbody></table>";?>
-            
-            
-    <?php } ?>
-            
-        </div>
-    </div>
-</div>
+
+
+                                        <?php } ?>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
 
                 </div>
-
-</div>
-
-
-</div>
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
+
+
+
             <?php include 'admin-footer.php';?>
+            <script>
+            setTimeout(function() {
+                // Closing the alert
+                $('#alert').alert('close');
+            }, 5000);
 
-</body>
 
-</html>
+
+
+            $(function() {
+
+
+                $("form[name='judges_form']").validate({
+
+                    rules: {
+                        judgefirstName: "required",
+                        judgelastName: "required",
+
+                        judgefirstName: {
+                            required: true
+                        },
+                        judgelastName: {
+                            required: true
+                        }
+                    },
+
+                    messages: {
+                        judgefirstName: "Please provide a valid name.",
+                        judgelastName: "Please provide a valid name."
+                    },
+                    submitHandler: function(form) {
+                        form.submit();
+
+                    }
+
+                });
+            });
+            </script>

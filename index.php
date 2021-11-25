@@ -33,8 +33,12 @@ if (isset($_SESSION['errors']))
 		
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
+        
          while ($rows = $result->fetch_assoc()) {
             $_SESSION['role'] = $rows['userType'];
+            $_SESSION['id'] = $rows['id'];
+           
+            
         }
        // echo  $_SESSION['role'];exit;
         

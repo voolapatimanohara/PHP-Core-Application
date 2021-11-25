@@ -45,26 +45,60 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
     $projectcount = mysqli_num_rows( $result );
     
 }
-?>
 
+if(!empty($_POST["save"])) {
+
+$title = $_POST['title'];
+$program = $_POST['program'];
+$names = $_POST['names'];
+$sponsor = $_POST['sponsor'];
+$description = $_POST['pr_description'];
+$pr_url = $_POST['pr_url'];
+$projectType = $_POST['projectType'];
+$mentor = $_POST['mentor'];
+        
+    // Store contactor data in database
+    
+    $sql = $conn->query("INSERT INTO projects(title, program, names, sponsor, pr_description, pr_url, projectType, mentor)
+    VALUES ('{$title}', '{$program}', '$names', '$sponsor', '$description', '$pr_url', '$projectType', '$mentor')");
+
+    if(!$sql) {
+      die("MySQL query failed.");
+    } else {
+      $response2 = array(
+        "status" => "alert-success",
+        "message" => "New Project Added succesfully ."
+      );     
+               
+    }
+
+}  
+?>
                         <div class="row">
 
                             <div class="col-lg-12 ba">
+                           <?php if(!empty($response2)) {?>
+                            <div id="add_project_alert" class="alert text-center <?php echo $response2['status']; ?>" role="alert">
+                                <?php echo $response2['message']; ?>
+                            </div>
+                            <?php }?>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-white">Add project</h6>
+                                </div>
                                 <div class="p-5">
-                                    <div class="text-left">
-                                        <h1 class="h4 text-gray-900 mb-4">Add project</h1>
-                                    </div>
-                                    <form class="add-project" action="insert_projects.php" method="post">
+                                    
+                                    <form class="add_project" Name="add_project" id ="add_project" action=""  enctype="multipart/form-data" method="post">
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <!-- <label for="text">Title</label> -->
+                                                <label for="text">Title</label>
                                                 <input type="text" class="form-control form-control-add" id="pr_title"
-                                                    name="title" placeholder="Project Title" required>
+                                                    name="title">
                                             </div>
                                             <div class="col-sm-6 add-item">
-                                                <!-- <label for="text">Program</label> -->
+                                                <label for="text">Program</label>
                                                 <input type="text" class="form-control form-control-add" id="pr_program"
-                                                    name="program" placeholder="Program" required>
+                                                    name="program">
                                             </div>
 
 
@@ -72,23 +106,22 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                         <div class="form-group row">
 
                                             <div class="col-sm-6 add-item">
-                                                <!-- <label for="text">Names</label> -->
+                                                <label for="text">Names</label>
                                                 <input type="text" class="form-control form-control-add" name="names"
-                                                    id="pr_names" placeholder="Names" required>
+                                                    id="pr_names">
                                             </div>
                                             <div class="col-sm-6 add-item">
-                                                <!-- <label for="text">Sponsor</label> -->
+                                                <label for="text">Sponsor</label>
                                                 <input type="text" class="form-control form-control-add" id="pr_sponsor"
-                                                    name="sponsor" placeholder="Sponsor" required>
+                                                    name="sponsor">
                                             </div>
 
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <!-- <label for="text">URL</label> -->
-                                                <input type="text" class="form-control form-control-add" name="pr_url"
-                                                    id="pr_url" placeholder="URL">
+                                                <label for="text">URL</label>
+                                                <input type="text" class="form-control form-control-add" id="pr_url" name="pr_url">
                                             </div>
                                             <div class="col-sm-6 add-item">
                                                 <label for="text">Project Type</label>
@@ -111,9 +144,9 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                         <div class="form-group row">
 
                                             <div class="col-sm-6 add-item">
-                                                <!-- <label for="text">Mentor</label> -->
+                                                <label for="text">Mentor</label>
                                                 <input type="text" class="form-control form-control-add" name="mentor"
-                                                    id="pr_mentor" placeholder="Mentor" required>
+                                                    id="pr_mentor">
                                             </div>
 
 
@@ -133,7 +166,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                     </form>
 
 
-
+                           </div>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +184,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Projects </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -242,4 +275,66 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
 
 </body>
 
+<script>
+   setTimeout(function() {
+        // Closing the alert
+        $('#add_project_alert').alert('close');
+    }, 5000);
+
+    $(function() {
+        $("form[name='add_project']").validate({
+
+            rules: {
+                title: "required",
+                program: "required",
+                names: "required",
+                sponsor: "required",
+                pr_url: "required",
+                pr_description: "required",
+
+                title: {
+                    required: true
+                },
+                program: {
+                    required: true
+                },
+                names:{
+                    required: true
+                },
+            
+                sponsor:{
+                    required: true
+                },
+                mentor:{
+                    required: true
+                },
+                pr_url:{
+                    required: true
+                },
+                pr_description:{
+                    required: true,
+                    minlength: 5,
+                   /* maxlength: 100,*/
+                    lettersonly: true
+                }
+            },
+
+            messages: {
+                title: "Please Enter Title.",
+                program: "Enter Program Name.",
+                names: "Enter Names",
+                sponsor: "Enter Sponsor",
+                mentor: "Enter Mentor",
+                pr_url: "Enter URL",
+                pr_description: "Please Enter Description"
+                
+            },
+            submitHandler: function(form) {
+                form.submit();
+
+            }
+
+        });
+    });
+    </script>
 </html>
