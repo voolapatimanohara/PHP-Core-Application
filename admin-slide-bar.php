@@ -100,7 +100,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="semi-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
@@ -113,7 +113,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
@@ -168,7 +168,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="jedge-semi-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
@@ -181,7 +181,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="judge-round2-results.php">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Semi-final Results</span></a>
         </li>
@@ -194,7 +194,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="jedge-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
@@ -208,7 +208,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="judge-final-results.php">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Final Results</span></a>
         </li>

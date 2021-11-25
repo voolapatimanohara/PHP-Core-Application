@@ -1,6 +1,6 @@
 <?php include 'admin-header.php';
-include 'database.php'; ?>
-
+include 'database.php'; 
+$id= $_SESSION['id']; ?>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -63,7 +63,7 @@ include 'database.php'; ?>
                             ?>
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Round -I Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Round -I Results </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -128,12 +128,16 @@ include 'database.php'; ?>
                                                                 // output data of each row
                                                                 while ($ques = $questiojns_result->fetch_assoc()) {
                                                                 ?>
-                                                                    <div class="form-group">
+                                                                    <div class="form-group row">
+                                                                    <div class="col-sm-9 add-item">
                                                                         <h5 class="modal-title" id="assignModalLabel">
                                                                             <?php echo $ques["question"]; ?></h5>
-                                                                        <label for="exampleFormControlInput1"> <?php echo $ques["description"]; ?></label>
-                                                                        <label for="exampleFormControlInput1"> <?php echo $ques["marks"]; ?></label>
-
+                                                                        <p> <?php echo $ques["description"]; ?></p>
+                                                                       
+                                                                </div>
+                                                                <div class="col-sm-3 add-item">
+                                                                <label for="exampleFormControlInput1"> <?php echo $ques["marks"]; ?></label>
+                                                                </div>
                                                                     </div>
                                                                 <?php } ?>
                                                                 <div class="form-group">
