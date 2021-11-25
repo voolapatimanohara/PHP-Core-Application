@@ -202,7 +202,7 @@ $totalPro = "SELECT * from projects_vs_jedges where jedgeId = $loginId  ORDER BY
                                                     </div>
                                                     <div class="modal-body">
                                                         
-                                                    <form>
+                                                    <form class="round-">
                                                         
                                                        
                                                         <div class="form-group row">
