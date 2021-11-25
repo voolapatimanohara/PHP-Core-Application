@@ -118,26 +118,91 @@ $totalPro = "SELECT * from projects_vs_jedges where jedgeId = $loginId  ORDER BY
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                   
+                                                        
                                                     <form>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Question-1</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                        
+                                                       
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-9">
+                                                                <label for="text">Project Objective:</label>
+                                                                <p>To what extent did the team demonstrate a clear understanding of the Client Objective?</p>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                                <option>Select</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Question-2</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Answer">
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-9">
+                                                                <label for="text">Project Innovation:</label>
+                                                                <p>To What extent did the team use innovation to meet the objectives of their client?</p>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                                <option>Select</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlSelect1">Add Marks</label>
-                                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
-                                                            </select>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-9">
+                                                                <label for="text">Challenges & Solutions:</label>
+                                                                <p>How did the team use creativity to work through obstacles and challenges encountered?</p>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                                <option>Select</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-9">
+                                                                <label for="text">Project Results or Progress:</label>
+                                                                <p>What results were achieved?(Based on realistic estimates for partially completed projects)</p>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                                <option>Select</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-9">
+                                                                <label for="text">Lessons Learned:</label>
+                                                                <p>To what extent did this applied project team Demonstrate the potential to apply this experience to future endeavours based on skills learned and thoughtful self-reflection.</p>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                                <option>Select</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        
                                                         
                                                         <div class="form-group">
                                                             <label for="exampleFormControlTextarea1">Remarks</label>
