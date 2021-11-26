@@ -131,7 +131,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         
                                                         <div class="form-group">
                                                             <label for="exampleFormControlTextarea1">Remarks</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"readonly>Remarkss</textarea>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"readonly>Remarks</textarea>
                                                         </div>
                                                         
                                                     </form>                                                 

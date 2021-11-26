@@ -9,10 +9,10 @@
         <div class="sidebar-brand-text mx-3">Itsshowcase</div>
     </a>
     <?php
-     $curUrl = trim(basename($_SERVER['REQUEST_URI']));
+    $curUrl = trim(basename($_SERVER['REQUEST_URI']));
     //echo $_SESSION['role'];exit;
     if (isset($_SESSION['role']) && $_SESSION['role'] == '0') {
-       
+
     ?>
         <!----------------------------- Admin Menu ------------------------------>
 
@@ -82,12 +82,25 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
+        <li class="nav-item <?php if ($curUrl == 'round1-results.php') {
+                                echo 'active';
+                            } else {
+                                echo 'inactive';
+                            } ?>">
+            <a class="nav-link" href="round1-results.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Round 1 Results</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
         <li class="nav-item <?php if ($curUrl == 'semi-final.php') {
                                 echo 'active';
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="semi-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
@@ -100,7 +113,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
@@ -133,6 +146,20 @@
             <i class="fas fa-money-bill-alt"></i>
                 <span>Round 1</span></a>
         </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item <?php if ($curUrl == 'judge-round1-results.php') {
+                                echo 'active';
+                            } else {
+                                echo 'inactive';
+                            } ?>">
+            <a class="nav-link" href="judge-round1-results.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Round 1 Results</span></a>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
@@ -141,10 +168,24 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="jedge-semi-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item <?php if ($curUrl == 'judge-round2-results.php') {
+                                echo 'active';
+                            } else {
+                                echo 'inactive';
+                            } ?>">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Semi-final Results</span></a>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
@@ -153,12 +194,26 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="jedge-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
 
-        <!--------- Judge Menu End --------------------------->
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item <?php if ($curUrl == 'judge-final-results.php') {
+                                echo 'active';
+                            } else {
+                                echo 'inactive';
+                            } ?>">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Final Results</span></a>
+        </li>
+
+   
     <?php
     }
     ?>
