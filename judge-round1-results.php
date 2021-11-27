@@ -112,7 +112,7 @@ $id= $_SESSION['id']; ?>
              
    
                 </tr>" ?>
-                                                <div class="modal fade" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -136,8 +136,8 @@ $id= $_SESSION['id']; ?>
                                                                        
                                                                 </div>
                                                                 <div class="col-sm-3 add-item">
-                                                                <label for="exampleFormControlInput1"> <?php echo $ques["marks"]; ?></label>
-                                                                </div>
+                                                                    <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>"  readonly>
+                                                                 </div>
                                                                     </div>
                                                                 <?php } ?>
                                                                 <div class="form-group">

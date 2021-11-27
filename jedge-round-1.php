@@ -99,7 +99,7 @@ include 'database.php'; ?>
              
    
                 </tr>" ?>
-                                                <div class="modal fade" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -110,28 +110,58 @@ include 'database.php'; ?>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
+                                                            <?php 
+                                                                if(!empty($_POST["save"])) {
 
-                                                                <form>
+                                                                        $judgeAssignedId = $_POST["judgeAssignedId"];
+                                                                        $questionId = $_POST["questionId"];
+                                                                        $remarks = $_POST["remarks"];
+                                                                        $marks =  $_POST["marks"];
+                                                                            
+                                                                        // Store contactor data in database
+                                                                        $sql = $conn->query("INSERT INTO results(judgeAssignedId, questionId, remarks, marks)
+                                                                        VALUES ('{$judgeAssignedId}', '{$questionId}', '{$remarks}', '{$marks}')");
+
+                                                                        if(!$sql) {
+                                                                        die("MySQL query failed.");
+                                                                        } else {
+                                                                        $response = array(
+                                                                            "status" => "alert-success",
+                                                                            "message" => "New Judge Added succesfully ."
+                                                                        );     
+                                                                                
+                                                                        }
+                                                                    
+                                                                }  ?>
+
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user"
+                                                                    enctype="multipart/form-data" method="post">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
+
+                                                                        
                                                                     ?>
+                                                                    <?php // print_r($ques); ?>
                                                                         <div class="form-group row">
+                                                                            <input type="text" name="judgeAssignedId" value="3" hideen>
                                                                             <div class="col-sm-9 add-item">
-                                                                                <h6 class="modal-title" id="assignModalLabel">
+                                                                                <h6 class="modal-title">
                                                                                     <?php echo $ques["question"]; ?></h6>
+                                                                                    <input type="text" name="questionId" value="<?php echo $ques["id"] ?>" hideen>
+                                                                
                                                                                 <p>  <?php echo $ques["description"]; ?></p>
                                                                             </div>
                                                                             <div class="col-sm-3 add-item">
                                                                                 <div class="form-group">
                                                                                     <label for="exampleFormControlSelect1">Add Markes</label>
-                                                                                        <select class="form-control" id="exampleFormControlSelect1">
-                                                                                            <option>0</option>
-                                                                                            <option>1</option>
-                                                                                            <option>2</option>
-                                                                                            <option>3</option>
-                                                                                            <option>4</option>
-                                                                                            <option>5</option>
+                                                                                        <select class="form-control" name= "marks" id="exampleFormControlSelect1">
+                                                                                            <option value ="0">0</option>
+                                                                                            <option value ="1">1</option>
+                                                                                            <option value ="2">2</option>
+                                                                                            <option value ="3">3</option>
+                                                                                            <option value ="4">4</option>
+                                                                                            <option value ="5">5</option>
                                                                                         </select>
                                                                                 </div>
                                                                             </div>
@@ -143,7 +173,7 @@ include 'database.php'; ?>
 
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlTextarea1">Remarks</label>
-                                                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                                        <textarea name="remarks" class="form-control" id="remarksTextarea1" rows="3"></textarea>
                                                                     </div>
                                                                     <input class="btn btn-primary" type="submit" name="save" value="Add">
 

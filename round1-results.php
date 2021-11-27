@@ -65,7 +65,7 @@ include 'database.php'; ?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Round -I Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Round -I Results </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -119,7 +119,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                 $questiojns_result = $conn->query($questiojns_list);
                                         ?>
 
-                                                <div class="modal fade" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -134,12 +134,22 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                                 // output data of each row
                                                                 while ($ques = $questiojns_result->fetch_assoc()) {
                                                                 ?>
-                                                                    <h5 class="modal-title" id="assignModalLabel">
-                                                                        <?php echo $ques["question"]; ?></h5>
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlInput1"><?php echo $ques["description"]; ?></label>
-                                                                        <label for="exampleFormControlInput1"><?php echo $ques["marks"]; ?></label>
+                                                                   
+                                                                    <div class="form-group row">
+                                                                        
+                                                                        <div class="col-sm-9 add-item">
+                                                                            <h6 class="modal-title" id="assignModalLabel">
+                                                                            <?php echo $ques["question"]; ?></h6>
+                                                                            <p for="exampleFormControlInput1"><?php echo $ques["description"]; ?></p>
+                                                                            
+                                                                    
+                                                                        </div>
+                                                                        <div class="col-sm-3 add-item">
+                                                                         <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>"  readonly>
+                                                                        
+                                                                        </div>
                                                                     </div>
+                                                                    <div class="form-group row">                                                                   </div>
                                                                 <?php } ?>
                                                             </div>
                                                             <div class="modal-footer">

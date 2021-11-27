@@ -1,179 +1,209 @@
-<!doctype html>
-<html>
+<?php include 'admin-header.php';
+include 'database.php'; ?>
 
-<head>
-  <meta charset="utf-8">
-  <title>Contact Form in PHP</title>
-  <?php include 'admin-header.php';?>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <!-- <style>
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      text-align: left;
-      font-family: sans-serif;
-    }
+<body id="page-top">
 
-    form {
-      border: 1px solid #1A33FF;
-      background: #ecf5fc;
-      padding: 40px 50px 45px;
-    }
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    .form-control:focus {
-      border-color: #000;
-      box-shadow: none;
-    }
+        <!-- Sidebar -->
+        <?php include 'admin-slide-bar.php'; ?>
+        <!-- End of Sidebar -->
 
-    label {
-      font-weight: 600;
-    }
-    
-    .error {
-      color: red;
-      font-weight: 400;
-      display: block;
-      padding: 6px 0;
-      font-size: 14px;
-    }
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-    .form-control.error {
-      border-color: red;
-      padding: .375rem .75rem;
-    }    
-  </style> -->
-</head>
+            <!-- Main Content -->
+            <div id="content">
 
-<body>
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-  <div class="container mt-5">
-    
-    <?php
-      include('database.php');
+                    <!-- Topbar Navbar -->
+                    <?php include 'admin-nav-toolbar.php'; ?>
 
-      if(!empty($_POST["send"])) {
-        $name = $_POST["fname"];
-        $email = $_POST["email"];
-        $phone = $_POST["phone"];
-        $subject = $_POST["subject"];
-        $message = $_POST["message"];
+                </nav>
+                <!-- End of Topbar -->
 
-        // Recipient email
-        $toMail = "digamber@positronx.io";
-        
-        // Build email header
-        $header = "From: " . $name . "<". $email .">\r\n";
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-        // Send email
-        
+                    <!-- Page Heading -->
+                    <!--  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Projects</h1>
 
-            // Store contactor data in database
-            $sql = $conn->query("INSERT INTO contacts_list(name, email, phone, subject, message, sent_date)
-            VALUES ('{$name}', '{$email}', '{$phone}', '{$subject}', '{$message}', now())");
+                    </div> -->
 
-            if(!$sql) {
-              die("MySQL query failed.");
-            } else {
-              $response = array(
-                "status" => "alert-success",
-                "message" => "We have received your query and stored your information. We will contact you shortly."
-              );              
-            }
-        
-      }  
-    ?>
+                    <!-- Content Row -->
+                    <div class="row">
+                        <?php
 
-    <!-- Messge -->
-    <?php if(!empty($response)) {?>
-      <div class="alert text-center <?php echo $response['status']; ?>" role="alert">
-        <?php echo $response['message']; ?>
-      </div>
-    <?php }?>
+                        $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
 
-    <!-- Contact form -->
-    <form action="" name="contactForm" method="post" enctype="multipart/form-data">
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" class="form-control" name="name" id="name">
-      </div>
+                        if ($result = mysqli_query($conn, $totalPro)) {
+                            // Return the number of rows in result set
+                            $projectcount = mysqli_num_rows($result);
+                        }
+                        ?>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control" name="email" id="email">
-      </div>
 
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="text" class="form-control" name="phone" id="phone">
-      </div>
 
-      <div class="form-group">
-        <label>Subject</label>
-        <input type="text" class="form-control" name="subject" id="subject">
-      </div>
 
-      <div class="form-group">
-        <label>Message</label>
-        <textarea class="form-control" name="message" id="message" rows="4"></textarea>
-      </div>
+                        <div class="container-fluid">
 
-      <input type="submit" name="send" value="Send" class="btn btn-dark btn-block">
-    </form>
-  </div>
+                            <!-- Page Heading -->
+                            <?php
 
-  <!-- JavaScript -->
-  <?php include 'admin-footer.php';?>
-  <script>
-    $(function() {
-      $("form[name='contactForm']").validate({
-        // Define validation rules
-        rules: {
-          name: "required",
-          email: "required",
-          phone: "required",
-          subject: "required",
-          message: "required",
-          name: {
-            required: true
-          },
-          email: {
-            required: true,
-            email: true
-          },          
-          phone: {
-            required: true,
-            minlength: 10,
-            maxlength: 10,
-            number: true
-          },          
-          subject: {
-            required: true
-          },          
-          message: {
-            required: true
-          }
-        },
-        // Specify validation error messages
-        messages: {
-          name: "Please provide a valid name.",
-          email: {
-            required: "Please enter your email",
-            minlength: "Please enter a valid email address"
-          },
-          phone: {
-            required: "Please provide a phone number",
-            minlength: "Phone number must be min 10 characters long",
-            maxlength: "Phone number must not be more than 10 characters long"
-          },
-          subject: "Please enter subject",
-          message: "Please enter your message"
-        },
-        submitHandler: function(form) {
-          form.submit();
-        }
-      });
-    });    
-  </script>
+                            $project_list = "SELECT *,projects.id as id from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 ORDER BY modifiedOn DESC";
+                            $result = $conn->query($project_list);
+
+                            ?>
+
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-white">Round -I Projects </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <?php if ($result->num_rows > 0) {
+
+                                            echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+            
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Project Type</th>
+                    <th  class='text-center'>Actions</th>                       
+                </tr>
+            </thead>
+            <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Project Type</th>
+                        <th  class='text-center'>Actions</th> 
+                    </tr>
+            </tfoot>
+                <tbody>";
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                $questiojns_list = "SELECT * FROM questions where status='1'";
+                                                $questiojns_result = $conn->query($questiojns_list);
+                                                echo "<tr>
+                <td>" . $row["id"] . "</td>
+                <td>" . $row["title"] . "</td>
+                <td>" . $row["projectType"] . "</td>
+                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
+                <i class='fa fa-external-link-alt'></i></a> </td>
+             
+   
+                </tr>" ?>
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3>Round-I</h3>
+
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <?php 
+                                                                if(!empty($_POST["save"])) {
+
+                                                                        $judgeAssignedId = $_POST["judgeAssignedId"];
+                                                                        $questionId = $_POST["questionId"];
+                                                                        $remarks = $_POST["remarks"];
+                                                                        $marks =  $_POST["marks"];
+                                                                            
+                                                                        // Store contactor data in database
+                                                                        $sql = $conn->query("INSERT INTO results(judgeAssignedId, questionId, remarks, marks)
+                                                                        VALUES ('{$judgeAssignedId}', '{$questionId}', '{$remarks}', '{$marks}')");
+
+                                                                        if(!$sql) {
+                                                                        die("MySQL query failed.");
+                                                                        } else {
+                                                                        $response = array(
+                                                                            "status" => "alert-success",
+                                                                            "message" => "New Judge Added succesfully ."
+                                                                        );     
+                                                                                
+                                                                        }
+                                                                    
+                                                                }  ?>
+
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user"
+                                                                    enctype="multipart/form-data" method="post">
+                                                                    <?php
+                                                                    // output data of each row
+                                                                    while ($ques = $questiojns_result->fetch_assoc()) {
+
+                                                                        
+                                                                    ?>
+                                                                    <?php // print_r($ques); ?>
+                                                                        <div class="form-group row">
+                                                                            <input type="text" name="judgeAssignedId" value="3" hideen>
+                                                                            <div class="col-sm-9 add-item">
+                                                                                <h6 class="modal-title">
+                                                                                    <?php echo $ques["question"]; ?></h6>
+                                                                                    <input type="text" name="questionId" value="<?php echo $ques["id"] ?>" hideen>
+                                                                
+                                                                                <p>  <?php echo $ques["description"]; ?></p>
+                                                                            </div>
+                                                                            <div class="col-sm-3 add-item">
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleFormControlSelect1">Add Markes</label>
+                                                                                        <select class="form-control" name= "marks" id="exampleFormControlSelect1">
+                                                                                            <option value ="0">0</option>
+                                                                                            <option value ="1">1</option>
+                                                                                            <option value ="2">2</option>
+                                                                                            <option value ="3">3</option>
+                                                                                            <option value ="4">4</option>
+                                                                                            <option value ="5">5</option>
+                                                                                        </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+
+                                                                        
+                                                                    <?php } ?>
+
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlTextarea1">Remarks</label>
+                                                                        <textarea name="remarks" class="form-control" id="remarksTextarea1" rows="3"></textarea>
+                                                                    </div>
+                                                                    <input class="btn btn-primary" type="submit" name="save" value="Add">
+
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <?php }
+                                            echo "</tbody></table>" ?>
+
+
+                                        <?php } ?>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- End of Main Content -->
+                    <!-- Logout Modal-->
+
+                    <?php include 'admin-footer.php'; ?>
 
 </body>
 

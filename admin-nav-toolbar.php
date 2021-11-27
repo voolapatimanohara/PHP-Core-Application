@@ -1,3 +1,4 @@
+<?php include 'database.php'; ?>
 <ul class="navbar-nav ml-auto">
                        
 						<div class="topbar-divider d-none d-sm-block"></div>
