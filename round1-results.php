@@ -108,7 +108,6 @@ include 'database.php';
                                                
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
-                <td>" . $row["roundNumber"] . "</td>
                 <td>" . $row["title"] . "</td>
                 <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>
                 <td>" . $row["marks"] . "</td>
