@@ -1,6 +1,10 @@
 <?php include 'admin-header.php';
-include 'database.php'; 
-$id= $_SESSION['id']; ?>
+include 'database.php';
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+}
+?>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -129,15 +133,15 @@ $id= $_SESSION['id']; ?>
                                                                 while ($ques = $questiojns_result->fetch_assoc()) {
                                                                 ?>
                                                                     <div class="form-group row">
-                                                                    <div class="col-sm-9 add-item">
-                                                                        <h5 class="modal-title" id="assignModalLabel">
-                                                                            <?php echo $ques["question"]; ?></h5>
-                                                                        <p> <?php echo $ques["description"]; ?></p>
-                                                                       
-                                                                </div>
-                                                                <div class="col-sm-3 add-item">
-                                                                    <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>"  readonly>
-                                                                 </div>
+                                                                        <div class="col-sm-9 add-item">
+                                                                            <h5 class="modal-title" id="assignModalLabel">
+                                                                                <?php echo $ques["question"]; ?></h5>
+                                                                            <p> <?php echo $ques["description"]; ?></p>
+
+                                                                        </div>
+                                                                        <div class="col-sm-3 add-item">
+                                                                            <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>" readonly>
+                                                                        </div>
                                                                     </div>
                                                                 <?php } ?>
                                                                 <div class="form-group">

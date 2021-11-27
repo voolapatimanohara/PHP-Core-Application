@@ -1,5 +1,31 @@
 <?php include 'admin-header.php';
 include 'database.php'; ?>
+<?php
+if (isset($_POST["judgeAssignedId"])) {
+?>
+    <!-- <pre><?php
+                // print_r($_POST);
+                // exit;
+                ?> </pre>  -->
+<?php
+
+    for ($x = 0; $x < count($_POST["judgeAssignedId"]); $x++) {
+        $str[] = "({$_POST["judgeAssignedId"][$x]},{$_POST["questionId"][$x]},{$_POST["marks"][$x]},'{$_POST["remarks"]}')";
+    }
+    $s = implode(',', $str);
+    $sql = $conn->query("INSERT INTO results (judgeAssignedId,questionId, marks,remarks) VALUES $s");
+
+    $conn->query("UPDATE projects_vs_jedges SET status = '0' WHERE id = " . $_POST['judgeAssignedId'][0] . "");
+
+    if (!$sql) {
+        die("MySQL query failed.");
+    } else {
+        $response = array(
+            "status" => "alert-success",
+            "message" => "New Judge Added succesfully ."
+        );
+    }
+}  ?>
 
 <body id="page-top">
 
@@ -45,16 +71,10 @@ include 'database.php'; ?>
                             $projectcount = mysqli_num_rows($result);
                         }
                         ?>
-
-
-
-
                         <div class="container-fluid">
-
                             <!-- Page Heading -->
                             <?php
-
-                            $project_list = "SELECT *,projects.id as id from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT *,projects.id as id from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 and status='1' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
@@ -110,72 +130,48 @@ include 'database.php'; ?>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                            <?php 
-                                                                if(!empty($_POST["save"])) {
-
-                                                                        $judgeAssignedId = $_POST["judgeAssignedId"];
-                                                                        $questionId = $_POST["questionId"];
-                                                                        $remarks = $_POST["remarks"];
-                                                                        $marks =  $_POST["marks"];
-                                                                            
-                                                                        // Store contactor data in database
-                                                                        $sql = $conn->query("INSERT INTO results(judgeAssignedId, questionId, remarks, marks)
-                                                                        VALUES ('{$judgeAssignedId}', '{$questionId}', '{$remarks}', '{$marks}')");
-
-                                                                        if(!$sql) {
-                                                                        die("MySQL query failed.");
-                                                                        } else {
-                                                                        $response = array(
-                                                                            "status" => "alert-success",
-                                                                            "message" => "New Judge Added succesfully ."
-                                                                        );     
-                                                                                
-                                                                        }
-                                                                    
-                                                                }  ?>
-
-                                                                <form name="judges_round1_form" id="judges_round1_form" class="user"
-                                                                    enctype="multipart/form-data" method="post">
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
 
-                                                                        
+
                                                                     ?>
-                                                                    <?php // print_r($ques); ?>
+                                                                        <?php // print_r($ques); 
+                                                                        ?>
                                                                         <div class="form-group row">
-                                                                            <input type="text" name="judgeAssignedId" value="3" hideen>
+                                                                            <input type="text" name="judgeAssignedId[]" value="3" hideen>
                                                                             <div class="col-sm-9 add-item">
                                                                                 <h6 class="modal-title">
                                                                                     <?php echo $ques["question"]; ?></h6>
-                                                                                    <input type="text" name="questionId" value="<?php echo $ques["id"] ?>" hideen>
-                                                                
-                                                                                <p>  <?php echo $ques["description"]; ?></p>
+                                                                                <input type="text" name="questionId[]" value="<?php echo $ques["id"] ?>" hideen>
+
+                                                                                <p> <?php echo $ques["description"]; ?></p>
                                                                             </div>
                                                                             <div class="col-sm-3 add-item">
                                                                                 <div class="form-group">
                                                                                     <label for="exampleFormControlSelect1">Add Markes</label>
-                                                                                        <select class="form-control" name= "marks" id="exampleFormControlSelect1">
-                                                                                            <option value ="0">0</option>
-                                                                                            <option value ="1">1</option>
-                                                                                            <option value ="2">2</option>
-                                                                                            <option value ="3">3</option>
-                                                                                            <option value ="4">4</option>
-                                                                                            <option value ="5">5</option>
-                                                                                        </select>
+                                                                                    <select class="form-control" name="marks[]" id="exampleFormControlSelect1">
+                                                                                        <option value="0">0</option>
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
 
-                                                                        
+
                                                                     <?php } ?>
 
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlTextarea1">Remarks</label>
                                                                         <textarea name="remarks" class="form-control" id="remarksTextarea1" rows="3"></textarea>
                                                                     </div>
-                                                                    <input class="btn btn-primary" type="submit" name="save" value="Add">
+                                                                    <input class="btn btn-primary" type="submit" value="Add">
 
                                                                 </form>
                                                             </div>
