@@ -1,8 +1,9 @@
 <?php include 'database.php';
-//echo $_SESSION['id'];
-
-
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+}
 ?>
+
 <ul class="navbar-nav ml-auto">
                        
 						<div class="topbar-divider d-none d-sm-block"></div>

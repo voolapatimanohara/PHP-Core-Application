@@ -1,7 +1,7 @@
 <?php include 'admin-header.php';
 include 'database.php';
 if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
+    $judgeId = $_SESSION['id'];
 }
 ?>
 

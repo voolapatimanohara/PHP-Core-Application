@@ -135,15 +135,7 @@
             <i class="fas fa-trophy"></i>
                 <span>Finals Result</span></a>
         </li>
-        <li class="nav-item <?php if ($curUrl == 'winners.php') {
-                                echo 'active';
-                            } else {
-                                echo 'inactive';
-                            } ?>">
-            <a class="nav-link" href="#">
-            <i class="fas fa-trophy"></i>
-                <span>winners</span></a>
-        </li>
+        
         <!----------------------------------  Admin Menu End ----------------------->
     <?php
     } else {
@@ -239,15 +231,7 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Final Results</span></a>
         </li>
-        <li class="nav-item <?php if ($curUrl == 'judge-final-results.php') {
-                                echo 'active';
-                            } else {
-                                echo 'inactive';
-                            } ?>">
-            <a class="nav-link" href="#">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Winners</span></a>
-        </li>                
+                      
    
     <?php
     }

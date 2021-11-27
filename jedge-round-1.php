@@ -1,6 +1,8 @@
 <?php include 'admin-header.php';
-include 'database.php'; ?>
-<?php
+include 'database.php'; 
+if (isset($_SESSION['id'])) {
+    $judgeId = $_SESSION['id'];
+}
 if (isset($_POST["judgeAssignedId"])) {
 ?>
     <!-- <pre><?php
@@ -74,7 +76,7 @@ if (isset($_POST["judgeAssignedId"])) {
                         <div class="container-fluid">
                             <!-- Page Heading -->
                             <?php
-                            $project_list = "SELECT *,projects.id as id from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 and status='1' ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT *,projects.id as id, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.status='1' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
@@ -119,17 +121,28 @@ if (isset($_POST["judgeAssignedId"])) {
              
    
                 </tr>" ?>
-                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3>Round-I</h3>
 
-                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <div class="modal-header modal-form-header">
+                                                                <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                               Round -I</h5>
+                                                                <button class="close text-white" type="button" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">×</span>
                                                                 </button>
                                                             </div>
+                                                            
+                                                            
+                                                                
+                                                                
+                                                                 
+                                                               
                                                             <div class="modal-body">
+                                                            <div class="header my-0">
+                                                                    <h5>Project Title: <?php echo $row["title"]; ?></h5>
+                                                                </div> 
                                                                 <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post">
                                                                     <?php
                                                                     // output data of each row
@@ -140,11 +153,11 @@ if (isset($_POST["judgeAssignedId"])) {
                                                                         <?php // print_r($ques); 
                                                                         ?>
                                                                         <div class="form-group row">
-                                                                            <input type="text" name="judgeAssignedId[]" value="3" hideen>
+                                                                            <input type="hidden" name="judgeAssignedId[]" value="<?php echo $row["pjid"]; ?>">
                                                                             <div class="col-sm-9 add-item">
                                                                                 <h6 class="modal-title">
                                                                                     <?php echo $ques["question"]; ?></h6>
-                                                                                <input type="text" name="questionId[]" value="<?php echo $ques["id"] ?>" hideen>
+                                                                                <input type="hidden" name="questionId[]" value="<?php echo $ques["id"]; ?>"> 
 
                                                                                 <p> <?php echo $ques["description"]; ?></p>
                                                                             </div>
