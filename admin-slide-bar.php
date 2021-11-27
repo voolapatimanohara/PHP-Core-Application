@@ -56,15 +56,15 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item <?php if ($curUrl == 'admin-assign-projects.php') {
+        <!-- <li class="nav-item <?php /* if ($curUrl == 'admin-assign-projects.php') {
                                 echo 'active';
                             } else {
                                 echo 'inactive';
-                            } ?>">
+                            } */ ?>">
             <a class="nav-link" href="admin-assign-projects.php">
             <i class="fas fa-user-plus"></i>
                 <span>Assign Project to Judges</span></a>
-        </li>
+        </li> -->
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
