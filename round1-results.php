@@ -103,7 +103,7 @@ include 'database.php';
                                             while ($row = $result->fetch_assoc()) {
                                                
                                                 if( $row["roundNumber"] !== '1' ){
-                                                        $class= "disabled";
+                                                        $class = "disabled";
                                                 }
                                                
                                                 echo "<tr>
@@ -114,7 +114,7 @@ include 'database.php';
                 <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote btn btn-primary ".$class."'>Promote</a></td>
+                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
