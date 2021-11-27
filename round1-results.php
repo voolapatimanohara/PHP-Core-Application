@@ -1,5 +1,7 @@
 <?php include 'admin-header.php';
-include 'database.php'; ?>
+include 'database.php';
+
+?>
 
 <body id="page-top">
 
@@ -54,7 +56,7 @@ include 'database.php'; ?>
                             <!-- Page Heading -->
                             <?php
 
-                            $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                            $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
   where 
@@ -70,6 +72,7 @@ include 'database.php'; ?>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <?php if ($result->num_rows > 0) {
+
 
                                             echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
             
@@ -98,20 +101,26 @@ include 'database.php'; ?>
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
+                                               
+                                                if( $row["roundNumber"] !== '1' ){
+                                                        $class= "disabled";
+                                                }
+                                               
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
+                <td>" . $row["roundNumber"] . "</td>
                 <td>" . $row["title"] . "</td>
                 <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>
                 <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
-                <td > <a href='#' >Promote</a> </td>
+                            
+                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote btn btn-primary ".$class."'>Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
    
                 </tr>";
-
-                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+ $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
 INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
 INNER JOIN questions on results.questionId=questions.id 
 where 
@@ -178,6 +187,33 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 
                     <?php include 'admin-footer.php'; ?>
 
-</body>
 
+ 
+</body>
+<script type="text/javascript">
+ 
+$('.doPromote1').click(function() {
+    var id = $(this).attr('id');
+   alert(id);
+    $.ajax({
+      url : "promote.php",
+      type: "POST",
+      data : {
+        id: id }
+      ,
+      success: function(data)
+      {
+       
+        $.get("round1-results.php", function(data)
+              {
+          
+        });
+      }
+    });
+  });
+
+</script>
+<?php
+
+//print_r($_POST); ?>
 </html>
