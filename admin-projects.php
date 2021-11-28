@@ -6,12 +6,13 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <?php include 'admin-slide-bar.php';?>
-        <!-- End of Sidebar -->
+    
+                <!-- Sidebar -->
+            <?php include 'admin-slide-bar.php';?>
+     
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper main-content" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
@@ -74,7 +75,7 @@ $mentor = $_POST['mentor'];
 
 }  
 ?>
-                        <div class="row">
+                      
 
                             <div class="col-lg-12 ba">
                            <?php if(!empty($response2)) {?>
@@ -169,7 +170,7 @@ $mentor = $_POST['mentor'];
                            </div>
                                 </div>
                             </div>
-                        </div>
+                      
 
 
                         <div class="container-fluid">
@@ -234,22 +235,68 @@ $mentor = $_POST['mentor'];
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            <?php echo $row["title"]; ?></h5>
-                                                        <button class="close" type="button" data-dismiss="modal"
+                                                    <div class="modal-header modal-form-header">
+                                                        <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                        Project Details</h5>
+                                                        <button class="close text-white" type="button" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
+                                                        
                                                     </div>
+                                                    
                                                     <div class="modal-body">
-                                                        <h5><?php echo $row["names"]; ?></h5>
-                                                        <p><?php echo $row["pr_description"]; ?></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="button"
-                                                            data-dismiss="modal">Close</button>
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <strong>Title</strong>
+                                                                        <label> <?php echo $row["title"]; ?></label>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong>Program</strong>
+                                                                    <p><?php echo $row["program"]; ?></p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <strong>Names</strong>
+                                                                    <p><?php echo $row["names"]; ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong>Sponsor</strong>
+                                                                    <p><?php echo $row["sponsor"]; ?></p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <strong>URL</strong>
+                                                                    <p><?php echo $row["pr_url"]; ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong>Project Type</strong>
+                                                                   <p> <span class="badge badge-info"><?php echo $row["projectType"]; ?></span></p>
+                                                                    
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <strong>Mentor</strong>
+                                                                    <p><?php echo $row["mentor"]; ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong>Description</strong>
+                                                                <p><?php echo $row["pr_description"]; ?></p>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                            
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="button"
+                                                                data-dismiss="modal">Close</button>
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

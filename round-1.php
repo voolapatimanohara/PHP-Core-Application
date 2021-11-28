@@ -233,8 +233,9 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
             echo "</tbody></table>"?>
 
 
-                                        <?php } ?>
-
+                                        <?php } else{ ?>
+<p> No Records </p>
+<?php } ?>
                                     </div>
                                 </div>
                             </div>
