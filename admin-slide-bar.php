@@ -1,4 +1,4 @@
-
+<div class="side-menu">
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -244,3 +244,4 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div> -->
 </ul>
+</div>

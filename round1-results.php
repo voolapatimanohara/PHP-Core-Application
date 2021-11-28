@@ -80,7 +80,7 @@ include 'database.php';
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Link</th>
+                    <!--<th>Link</th>-->
                     <th>Total Marks</th>
                     <th>Remarks</th>
                     <th>Promote</th>
@@ -91,7 +91,7 @@ include 'database.php';
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Link</th>
+                        <!--<th>Link</th>-->
                         <th>Total Marks</th>
                     <th>Remarks</th>
                     <th>Promote</th>
@@ -101,19 +101,19 @@ include 'database.php';
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                               
+                                                $promoButton= "";
                                                 if( $row["roundNumber"] !== '1' ){
-                                                        $class = "disabled";
+                                                        $promoButton = "disabled";
                                                 }
                                                
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
-                <td>" . $row["title"] . "</td>
-                <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>
+                <td>" .substr($row["title"],0,25)."..</td>
+               <!-- <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>-->
                 <td>" . $row["marks"] . "</td>
-                <td>" . $row["remarks"] . "</td>
+                <td>" .substr($row["remarks"],0,25)."..</td>
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
+                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote btn btn-primary ".$promoButton."'>Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -130,12 +130,19 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                 <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
+                                                        <div class="modal-header modal-form-header">
+                                                            <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                                Round-I Results</h5>
+                                                            <button class="close text-white" type="button" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                            
+                                                        </div>
                                                             <div class="modal-header">
-                                                                <h3>Round-I Results</h3>
+                                                                <strong><?php echo $row['title']; ?></strong>
 
-                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
+                                                                
                                                             </div>
                                                             <div class="modal-body">
                                                                 <?php
@@ -146,8 +153,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                                     <div class="form-group row">
                                                                         
                                                                         <div class="col-sm-9 add-item">
-                                                                            <h6 class="modal-title" id="assignModalLabel">
-                                                                            <?php echo $ques["question"]; ?></h6>
+                                                                            <strong><?php echo $ques["question"]; ?></strong>
                                                                             <p for="exampleFormControlInput1"><?php echo $ques["description"]; ?></p>
                                                                             
                                                                     
