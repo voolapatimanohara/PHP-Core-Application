@@ -227,7 +227,7 @@ echo "</tbody></table>";?>
                 <td>".$row["firstName"]."</td>
                 <td>".$row["lastName"]."</td>
                 <td>".$row["loginId"]."</td>
-                <td>".$row["pswd"]."</td>
+                <td>".$row["save_pwd"]."</td>
                 <td>".$row["status"]."</td>
                 <td> <a href='#' data-toggle='modal' data-target='#viewjudgeModel_".$row["id"]."'>
                 <i class='fas fa-eye'></i></a> </td>
@@ -267,7 +267,7 @@ echo "</tbody></table>";?>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                 <strong>Password</strong> 
-                                                                    <p><?php echo $row["firstName"]."_".$row["lastName"]; ?></p>
+                                                                    <p><?php echo $row["save_pwd"]; ?></p>
                                                                 </div>
                                                         </div>
                                                    
