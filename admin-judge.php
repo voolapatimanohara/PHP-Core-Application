@@ -38,10 +38,26 @@
 
 		$fname = $_POST["judgefirstName"];
 		$lname = $_POST["judgelastName"];
-			
+
+        function RandomStringMethod($length = 6) {
+            $randomCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=-$&@';
+            $stringLength = strlen($randomCharacters);
+            $randomString = '';
+            
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $randomCharacters[rand(0, $stringLength - 1)];
+            }
+
+            return $randomString;
+        }
+
+        $password = RandomStringMethod(6);
+       // echo $password;
+        
+		//echo $pass = "praveen";	
 		// Store contactor data in database
-		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd)
-		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($fname."_".$lname)."')");
+		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd, save_pwd)
+		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($password)."', '{$password}')");
 
 		if(!$sql) {
 		  die("MySQL query failed.");
@@ -204,13 +220,14 @@ echo "</tbody></table>";?>
             </tfoot>
                 <tbody>";
                 // output data of each row
+                //  <td>".$row["firstName"]."_".$row["lastName"]."</td>
                 while($row = $result->fetch_assoc()) {
                 echo "<tr>
                 <td>".$row["id"]."</td>
                 <td>".$row["firstName"]."</td>
                 <td>".$row["lastName"]."</td>
                 <td>".$row["loginId"]."</td>
-                <td>".$row["firstName"]."_".$row["lastName"]."</td>
+                <td>".$row["pswd"]."</td>
                 <td>".$row["status"]."</td>
                 <td> <a href='#' data-toggle='modal' data-target='#viewjudgeModel_".$row["id"]."'>
                 <i class='fas fa-eye'></i></a> </td>

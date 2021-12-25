@@ -100,18 +100,18 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="semi-final.php">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
-        <li class="nav-item <?php if ($curUrl == 'semi-final.php') {
+        <li class="nav-item <?php if ($curUrl == 'semi-final-results.php') {
                                 echo 'active';
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="semi-final-results.php">
             <i class="fas fa-tasks"></i>
-                <span>Semi-Finals Re</span></a>
+                <span>Semi-Finals Results</span></a>
         </li>
 
         <!-- Divider -->
@@ -122,16 +122,17 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="final.php">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
-        <li class="nav-item <?php if ($curUrl == 'final.php') {
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item <?php if ($curUrl == 'final-results.php') {
                                 echo 'active';
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="final-results.php">
             <i class="fas fa-trophy"></i>
                 <span>Finals Result</span></a>
         </li>
@@ -187,7 +188,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="jedge-semi-final.php">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
@@ -200,7 +201,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="judge-round2-results.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Semi-final Results</span></a>
         </li>
@@ -213,7 +214,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="jedge-final.php">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
@@ -227,7 +228,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="judge-final-results.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Final Results</span></a>
         </li>
