@@ -86,7 +86,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * FROM projects where roundNumber= '1'and status= '0'";
+  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '0' and projectType= 'Business'";
   $result = $conn->query($project_list);
 
   ?>
