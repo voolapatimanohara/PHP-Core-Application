@@ -11681,3 +11681,13 @@ footer a:hover, footer a:active, footer a:focus {
     .modal-form{
       border: 1px solid #272b53 !important;
     }
+
+    .border-top-primary{
+      border-top: 0.25rem solid #4e73df!important;
+    }
+    .side-menu{
+      position: fixed !important;
+    }
+    form .row, .modal-body .row{
+      margin-left: -0.75rem !important;
+    }

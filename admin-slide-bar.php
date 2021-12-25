@@ -1,4 +1,4 @@
-
+<div class="side-menu">
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -56,15 +56,15 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item <?php if ($curUrl == 'admin-assign-projects.php') {
+        <!-- <li class="nav-item <?php /* if ($curUrl == 'admin-assign-projects.php') {
                                 echo 'active';
                             } else {
                                 echo 'inactive';
-                            } ?>">
+                            } */ ?>">
             <a class="nav-link" href="admin-assign-projects.php">
             <i class="fas fa-user-plus"></i>
                 <span>Assign Project to Judges</span></a>
-        </li>
+        </li> -->
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
@@ -100,9 +100,18 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="semi-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
+        </li>
+        <li class="nav-item <?php if ($curUrl == 'semi-final.php') {
+                                echo 'active';
+                            } else {
+                                echo 'inactive';
+                            } ?>">
+            <a class="nav-link" href="#">
+            <i class="fas fa-tasks"></i>
+                <span>Semi-Finals Re</span></a>
         </li>
 
         <!-- Divider -->
@@ -113,10 +122,20 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
+        <li class="nav-item <?php if ($curUrl == 'final.php') {
+                                echo 'active';
+                            } else {
+                                echo 'inactive';
+                            } ?>">
+            <a class="nav-link" href="#">
+            <i class="fas fa-trophy"></i>
+                <span>Finals Result</span></a>
+        </li>
+        
         <!----------------------------------  Admin Menu End ----------------------->
     <?php
     } else {
@@ -168,7 +187,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="jedge-semi-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-tasks"></i>
                 <span>Semi-Finals</span></a>
         </li>
@@ -181,7 +200,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="judge-round2-results.php">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Semi-final Results</span></a>
         </li>
@@ -194,7 +213,7 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="jedge-final.php">
+            <a class="nav-link" href="#">
             <i class="fas fa-trophy"></i>
                 <span>Finals</span></a>
         </li>
@@ -208,11 +227,11 @@
                             } else {
                                 echo 'inactive';
                             } ?>">
-            <a class="nav-link" href="judge-final-results.php">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Final Results</span></a>
         </li>
-
+                      
    
     <?php
     }
@@ -225,3 +244,4 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div> -->
 </ul>
+</div>

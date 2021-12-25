@@ -101,6 +101,8 @@
                     <?php $judge_list= "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
   $judgeresult = $conn->query($judge_list);
   ?>
+    <div class="row">
+    <div class="col-lg-12 mb-6">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-white">Judges</h6>
@@ -148,8 +150,9 @@ echo "</tbody></table>";?>
                             </div>
                         </div>
                     </div>
+    </div>
 
-
+    </div>
                     <div class="row">
                         <!-- Content Column -->
                         <div class="container-fluid">
@@ -219,17 +222,38 @@ echo "</tbody></table>";?>
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            <?php echo $row["firstName"].$row["lastName"]; ?></h5>
-                                                        <button class="close" type="button" data-dismiss="modal"
+                                                    <div class="modal-header modal-form-header">
+                                                        <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                        Judge Details</h5>
+                                                        <button class="close text-white" type="button" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
+                                                        
                                                     </div>
+                                                    
                                                     <div class="modal-body">
-                                                        <h5><?php echo $row["firstName"]; ?></h5>
-                                                        <p><?php echo $row["lastName"]; ?></p>
+                                                        <div class="row">
+                                                                <div class="col-md-6">
+                                                                <strong>First Name</strong>
+                                                                    <p><?php echo $row["firstName"]; ?></p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                <strong>Last Name</strong> 
+                                                                    <p><?php echo $row["lastName"]; ?></p>
+                                                                </div>
+                                                        </div>
+                                                        <div class="row">
+                                                                <div class="col-md-6">
+                                                                <strong>User ID</strong>
+                                                                    <p><?php echo $row["loginId"]; ?></p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                <strong>Password</strong> 
+                                                                    <p><?php echo $row["firstName"]."_".$row["lastName"]; ?></p>
+                                                                </div>
+                                                        </div>
+                                                   
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" type="button"
