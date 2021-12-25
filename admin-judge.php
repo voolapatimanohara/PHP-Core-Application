@@ -38,9 +38,11 @@
 
 		$fname = $_POST["judgefirstName"];
 		$lname = $_POST["judgelastName"];
-
-        function RandomStringMethod($length = 6) {
-            $randomCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=-$&@';
+        
+        function RandomStringMethod($length = 3) {
+           // $randomCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=-$&@';
+            $randomCharacters = '0123456789';
+           
             $stringLength = strlen($randomCharacters);
             $randomString = '';
             
@@ -50,14 +52,16 @@
 
             return $randomString;
         }
+       
 
-        $password = RandomStringMethod(6);
-       // echo $password;
+        $password = RandomStringMethod(3);
+      
+        $lnLetter = substr($lname, 0, 1); 
+		$passSave = $fname.'_'.$lnLetter.$password;	
         
-		//echo $pass = "praveen";	
 		// Store contactor data in database
 		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd, save_pwd)
-		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($password)."', '{$password}')");
+		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($password)."', '{$passSave}')");
 
 		if(!$sql) {
 		  die("MySQL query failed.");
