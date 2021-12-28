@@ -62,7 +62,7 @@ if (isset($_SESSION['id'])) {
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
   where 
-  projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId ORDER BY projects_vs_jedges.modifiedOn DESC";
+  projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
                             ?>
                             <div class="card shadow mb-4">

@@ -58,15 +58,15 @@ include 'database.php';
                             $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
-  where projects.projectType = 'Technology' and
-  projects_vs_jedges.roundNumber=1 group by projects_vs_jedges.projectId, results.remarks";
+  where projects.projectType = 'Business' and
+  projects_vs_jedges.roundNumber=3 group by projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
 
                             ?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Technology Round -I Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Business  Results </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -101,7 +101,7 @@ include 'database.php';
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
                                                
-                                                if( $row["roundNumber"] !== '1' ){
+                                                if( $row["roundNumber"] !== '3' ){
                                                         $class = "disabled";
                                                 }
                                                
@@ -121,7 +121,7 @@ include 'database.php';
 INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
 INNER JOIN questions on results.questionId=questions.id 
 where 
-projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
                                                 $questiojns_result = $conn->query($questiojns_list);
                                         ?>
 
@@ -129,7 +129,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h3>Round-I Results</h3>
+                                                                <h3>Final Results</h3>
 
                                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">×</span>
@@ -170,7 +170,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                             echo "</tbody></table>" ?>
 
 
-                                        <?php } else{echo "NO Records Found"; } ?>
+                                        <?php } else{echo "No Records Found"; } ?>
 
                                     </div>
                                 </div>
@@ -185,15 +185,15 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                             $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
-  where projects.projectType = 'Business' and
-  projects_vs_jedges.roundNumber=1 group by projects_vs_jedges.projectId, results.remarks";
+  where projects.projectType = 'Technology' and
+  projects_vs_jedges.roundNumber=3 group by projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
 
                             ?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Business Round -I Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Technology Results </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -228,7 +228,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
                                                
-                                                if( $row["roundNumber"] !== '1' ){
+                                                if( $row["roundNumber"] !== '3' ){
                                                         $class = "disabled";
                                                 }
                                                
@@ -248,7 +248,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
 INNER JOIN questions on results.questionId=questions.id 
 where 
-projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
                                                 $questiojns_result = $conn->query($questiojns_list);
                                         ?>
 
@@ -256,7 +256,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h3>Round-I Results</h3>
+                                                                <h3>Final Results</h3>
 
                                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">×</span>
@@ -328,7 +328,7 @@ $('.doPromote1').click(function() {
       success: function(data)
       {
        
-        $.get("round1-results.php", function(data)
+        $.get("final-results.php", function(data)
               {
           
         });
