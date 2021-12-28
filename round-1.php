@@ -1,6 +1,7 @@
 <?php include 'admin-header.php';
  include 'database.php';
 
+
 if(isset($_POST['save_judges']))
 {
     
@@ -19,6 +20,7 @@ if(isset($_POST['save_judges']))
     if($query_run)
     {
         $_SESSION['status'] = "Inserted Succesfully";
+        
         echo "alert(Succesfully)";
         header("Location: round-1.php");
     }
@@ -86,7 +88,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '0' and projectType= 'Business'";
+  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '0'";
   $result = $conn->query($project_list);
 
   ?>
@@ -201,7 +203,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         <div class="form-group">
                                                         <label for="exampleFormControlSelect2">Assign Judges</label>
 
-                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="jedgeId">
+                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="MultiselectjedgeId">
                                                         
                                                             <?php
                                                                 // Using database connection file here
@@ -209,13 +211,26 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
 
                                                                 while($data = mysqli_fetch_array($judgelist))
                                                                 {
-                                                                    echo "<option value='". $data['id'] ."'>" .$data['firstName'].$data['lastName'] ."</option>";  // displaying data in option menu
-                                                                }	
+
+                                                                    $jdId= $data['id'];
+                                                                    $totalProforJudge = "SELECT * from projects_vs_jedges  where jedgeId = $jdId  and  roundNumber= '1' and status= '1'";
+  
+                                                                    if ($result = mysqli_query($conn, $totalProforJudge)) {
+                                                                    // Return the number of rows in result set
+                                                                    $totalProforJudgecount = mysqli_num_rows( $result );
+                                                                    
+                                                                }
+                                                                    echo "<option value='". $data['id'] ."'>" .$data['firstName'].$data['lastName'] ."($totalProforJudgecount)</option>";  // displaying data in option menu
+                                                                }
+                                                                
+                                                                
+                                                                
+                                                                //echo $totalProforJudgecount;
                                                             ?>  
                                                     </select>                                           
                                                         </div>
                                                         <div class="form-group">
-                                                            <input class="btn btn-primary w-25" type="submit" name="save_judges" value="Add">
+                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add" onclick='return window.confirm("Are you sure you want to submit?");');">
                                                         </div>
                                                     </form> 
                                                     </div>
@@ -249,5 +264,9 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                     <?php include 'admin-footer.php';?>
 
 </body>
-
+<script>
+$("#MultiselectjedgeId").kendoMultiSelect({
+    maxSelectedItems: 4 //only three or less items could be selected
+});
+</script>
 </html>

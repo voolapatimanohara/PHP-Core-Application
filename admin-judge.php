@@ -61,7 +61,7 @@
         
 		// Store contactor data in database
 		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd, save_pwd)
-		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($password)."', '{$passSave}')");
+		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($passSave)."', '{$passSave}')");
 
 		if(!$sql) {
 		  die("MySQL query failed.");
