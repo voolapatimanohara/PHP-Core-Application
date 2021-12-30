@@ -8,28 +8,32 @@ if(isset($_POST['save_judges']))
     $prodId = $_POST['prodId'];
     $jedgeIdlist = $_POST['jedgeId'];
     $roundNumber = $_POST['roundNumber'];
-    
-    foreach ($jedgeIdlist as $value) {
-        $int = $value;
-        $query = "INSERT INTO projects_vs_jedges (projectId,jedgeId,roundNumber) VALUES ('$prodId', '$int', '$roundNumber')";
-        $query_run = mysqli_query($conn, $query);
-    }
-   
-    $res= $conn->query("UPDATE projects SET status = '1' WHERE id = " . $prodId . "");
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Inserted Succesfully";
+    if(!empty($jedgeIdlist)){
+        foreach ($jedgeIdlist as $value) {
+            $int = $value;
+            $query = "INSERT INTO projects_vs_jedges (projectId,jedgeId,roundNumber) VALUES ('$prodId', '$int', '$roundNumber')";
+            $query_run = mysqli_query($conn, $query);
+        }
+       
+        $res= $conn->query("UPDATE projects SET status = '1' WHERE id = " . $prodId . "");
         
-        echo "alert(Succesfully)";
-        header("Location: round-1.php");
+        if($query_run)
+        {
+            $_SESSION['status'] = "Inserted Succesfully";
+            
+            echo "alert(Succesfully)";
+            header("Location: round-1.php");
+        }
+        else
+        {
+           // echo "alert(NoSuccesfully)";
+            $_SESSION['status'] = "Not Inserted";
+            header("Location: round-1.php");
+        }
+    } else{
+        echo "alert(Select Judge)";
     }
-    else
-    {
-       // echo "alert(NoSuccesfully)";
-        $_SESSION['status'] = "Not Inserted";
-        header("Location: round-1.php");
-    }
+    
 }
 
 
@@ -88,7 +92,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '0'";
+  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '1' and projectType ='Business'";
   $result = $conn->query($project_list);
 
   ?>
@@ -230,7 +234,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                     </select>                                           
                                                         </div>
                                                         <div class="form-group">
-                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add" onclick='return window.confirm("Are you sure you want to submit?");');">
+                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add" onclick='return window.confirm("Are you sure you want to submit?");'>
                                                         </div>
                                                     </form> 
                                                     </div>
@@ -265,8 +269,17 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
 
 </body>
 <script>
-$("#MultiselectjedgeId").kendoMultiSelect({
-    maxSelectedItems: 4 //only three or less items could be selected
+var maxCheckedCount = 4;
+var maxCheckedAlertMessage = 'You must select 4 judges!';
+jQuery('select').change(function(event) {
+var n = $(this).children(':selected').length;
+if (n > maxCheckedCount || n < maxCheckedCount) {
+if (n > maxCheckedCount) {
+$(this).children().prop('selected', false);
+}
+alert(maxCheckedAlertMessage);
+return false;
+}
 });
 </script>
 </html>
