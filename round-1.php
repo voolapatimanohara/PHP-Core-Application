@@ -207,7 +207,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         <div class="form-group">
                                                         <label for="exampleFormControlSelect2">Assign Judges</label>
 
-                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="MultiselectjedgeId">
+                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="MultiselectjedgeId" required>
                                                         
                                                             <?php
                                                                 // Using database connection file here
@@ -234,7 +234,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                     </select>                                           
                                                         </div>
                                                         <div class="form-group">
-                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add" onclick='return window.confirm("Are you sure you want to submit?");'>
+                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add">
                                                         </div>
                                                     </form> 
                                                     </div>
