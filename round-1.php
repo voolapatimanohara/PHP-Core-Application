@@ -15,7 +15,7 @@ if(isset($_POST['save_judges']))
             $query_run = mysqli_query($conn, $query);
         }
        
-        $res= $conn->query("UPDATE projects SET status = '1' WHERE id = " . $prodId . "");
+        mysqli_query($conn, "UPDATE projects SET status = '1' WHERE id = " . $prodId . "");
         
         if($query_run)
         {
@@ -92,7 +92,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '1' and projectType ='Business'";
+  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '0'";
   $result = $conn->query($project_list);
 
   ?>
@@ -213,17 +213,12 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                                 // Using database connection file here
                                                                 $judgelist = mysqli_query($conn, "SELECT id, firstName, lastName From login");  // Use select query here 
 
-                                                                while($data = mysqli_fetch_array($judgelist))
-                                                                {
-
-                                                                    $jdId= $data['id'];
-                                                                    $totalProforJudge = "SELECT * from projects_vs_jedges  where jedgeId = $jdId  and  roundNumber= '1' and status= '1'";
-  
-                                                                    if ($result = mysqli_query($conn, $totalProforJudge)) {
-                                                                    // Return the number of rows in result set
-                                                                    $totalProforJudgecount = mysqli_num_rows( $result );
-                                                                    
-                                                                }
+                                                                while($data = mysqli_fetch_array($judgelist))                                              {                                     $totalProforJudge = "SELECT count(*) countProj from projects_vs_jedges  where jedgeId = ".$data['id']."  and roundNumber= '1' and status= '1'";
+                                                                    $newResult = mysqli_query($conn, $totalProforJudge);
+                                                                    $totalProforJudgecount = 0;
+                                                                    while($rowNew = $newResult->fetch_assoc()) {
+                                                                        $totalProforJudgecount = $rowNew['countProj'];
+                                                                    }
                                                                     echo "<option value='". $data['id'] ."'>" .$data['firstName'].$data['lastName'] ."($totalProforJudgecount)</option>";  // displaying data in option menu
                                                                 }
                                                                 
