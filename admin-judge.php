@@ -38,30 +38,10 @@
 
 		$fname = $_POST["judgefirstName"];
 		$lname = $_POST["judgelastName"];
-        
-        function RandomStringMethod($length = 3) {
-           // $randomCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=-$&@';
-            $randomCharacters = '0123456789';
-           
-            $stringLength = strlen($randomCharacters);
-            $randomString = '';
-            
-            for ($i = 0; $i < $length; $i++) {
-                $randomString .= $randomCharacters[rand(0, $stringLength - 1)];
-            }
-
-            return $randomString;
-        }
-       
-
-        $password = RandomStringMethod(3);
-      
-        $lnLetter = substr($lname, 0, 1); 
-		$passSave = $fname.'_'.$lnLetter.$password;	
-        
+			
 		// Store contactor data in database
-		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd, save_pwd)
-		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($passSave)."', '{$passSave}')");
+		$sql = $conn->query("INSERT INTO login(firstName, lastName, loginId, pswd)
+		VALUES ('{$fname}', '{$lname}', '$fname$lname', '".md5($fname."_".$lname)."')");
 
 		if(!$sql) {
 		  die("MySQL query failed.");
@@ -224,14 +204,13 @@ echo "</tbody></table>";?>
             </tfoot>
                 <tbody>";
                 // output data of each row
-                //  <td>".$row["firstName"]."_".$row["lastName"]."</td>
                 while($row = $result->fetch_assoc()) {
                 echo "<tr>
                 <td>".$row["id"]."</td>
                 <td>".$row["firstName"]."</td>
                 <td>".$row["lastName"]."</td>
                 <td>".$row["loginId"]."</td>
-                <td>".$row["save_pwd"]."</td>
+                <td>".$row["firstName"]."_".$row["lastName"]."</td>
                 <td>".$row["status"]."</td>
                 <td> <a href='#' data-toggle='modal' data-target='#viewjudgeModel_".$row["id"]."'>
                 <i class='fas fa-eye'></i></a> </td>
@@ -271,7 +250,7 @@ echo "</tbody></table>";?>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                 <strong>Password</strong> 
-                                                                    <p><?php echo $row["save_pwd"]; ?></p>
+                                                                    <p><?php echo $row["firstName"]."_".$row["lastName"]; ?></p>
                                                                 </div>
                                                         </div>
                                                    
