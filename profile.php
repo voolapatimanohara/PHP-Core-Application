@@ -1,6 +1,8 @@
 <?php include 'admin-header.php';?>
 <?php include 'database.php';
  $loginId = $_SESSION['id'];
+ $userType = $_SESSION['role'];
+// echo $userType;
 
 if(!empty($_POST["save"])) {
 
@@ -8,9 +10,9 @@ if(!empty($_POST["save"])) {
         $user_list = "SELECT *from login WHERE id= $loginId";
         
         $row = mysqli_fetch_array($user_list);
-        print_r($row);
-        echo "praveen";
-        exit;
+        // print_r($row);
+        // echo "praveen";
+        // exit;
         
        
         if($_POST["currentPassword"] == $row["pswd"] && $_POST["newPassword"] == $_POST["verifyPassword"] ) {
@@ -71,7 +73,7 @@ if(!empty($_POST["save"])) {
                         <div class="card mb-3 border-top-primary">
                                 <?php while($row = $result->fetch_assoc()) { 
                                    
-                                    if($row["userType"] == 0  ){
+                                    if($row["userType"] == "0"  ){
                                         $userType= "Admin";
                                     }else{
                                         $userType= "Judge";
@@ -120,10 +122,20 @@ if(!empty($_POST["save"])) {
 								    <div class="tab-content" id="v-pills-tabContent">
 
                                     <div class="tab-pane  show active" id="about" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                        <h4>Welcome Co-ordinator</h4>
-                                        <hr>
-                                    <p>The showcase Judging Application is for coordinating and controlling innovation project, sponsored by Bell. There are going to be three steps to review the project. Students are going to find solutions for the real-world challenges. The sponsors are going to help them in finding solutions.</p>
-                                    </div>
+                                      <?php if($_SESSION['role'] == "0"){ ?>
+                                          <h4>Welcome Co-ordinator</h4>
+                                          <hr>
+                                      <p>The showcase Judging Application is for coordinating and controlling innovation project, sponsored by Bell. There are going to be three steps to review the project. Students are going to find solutions for the real-world challenges. The sponsors are going to help them in finding solutions.</p>
+                                     
+                                     <?php } else{ ?>
+                                         <h4>Welcome Judge</h4>
+                                         <hr>
+                                     <p>This judging platform will facilitate all applied projects and showcase them to judges who can easily score them for various criteria.</p>
+                                    
+                                   <?php  } 
+                                      ?>
+                                      
+                                       </div>
     
                                         <div class="tab-pane  " id="profile" role="tabpanel" aria-labelledby="profile-tab"><div class="card-body">
 											

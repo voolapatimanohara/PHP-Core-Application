@@ -1,3 +1,4 @@
+S
 <?php
 if (isset($_SESSION['errors']))
 {
@@ -54,7 +55,7 @@ if (isset($_SESSION['errors']))
 
 <?php include 'login.php';?>
 <header class="masthead">
-        <section class="text-center" id="aboutus">
+        <section class="text-center about" id="aboutus">
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                 <div class="col-md-6 mb-5">
@@ -78,10 +79,10 @@ if (isset($_SESSION['errors']))
             </div>
         </section>
         </header>
-        <section class="text-center bg-gradient-primary-to-secondary" id="contactus">
+        <section class="text-center bg-gradient-primary-to-secondary contactus" id="contactus">
              <div class="col-lg-12 order-lg-1 mb-5 mb-lg-0">
              <div class="h2 fs-1 text-white mb-4">Contact us</div>
-                        <div class="container-fluid px-5">
+                        <div class="container-fluid px-5 contactus">
                             <div class="row gx-5">
                                 <div class="col-md-4 mb-5">
                                     <!-- Feature item-->
@@ -121,3 +122,4 @@ if (isset($_SESSION['errors']))
 
 
 <?php include 'footer.php';?>
+

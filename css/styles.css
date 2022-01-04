@@ -11688,6 +11688,7 @@ footer a:hover, footer a:active, footer a:focus {
     .side-menu{
       position: fixed !important;
     }
-    form .row, .modal-body .row{
+    
+    form .row, .modal-body .row, .login .row, .about .row, .contactus .row{
       margin-left: -0.75rem !important;
     }
