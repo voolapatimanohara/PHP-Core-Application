@@ -1,6 +1,8 @@
 <?php include 'admin-header.php';
 include 'database.php';
-
+if (isset($_SESSION['id'])) {
+    $judgeId = $_SESSION['id'];
+}
 ?>
 
 <body id="page-top">
@@ -56,15 +58,13 @@ include 'database.php';
                             <!-- Page Heading -->
                             <?php
 
-                            $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                            $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
   where 
-  projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId ORDER BY projects_vs_jedges.modifiedOn DESC";
+  projects_vs_jedges.jedgeId=$judgeId and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
-
                             ?>
-
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-white">Round -I Results </h6>
@@ -73,17 +73,15 @@ include 'database.php';
                                     <div class="table-responsive">
                                         <?php if ($result->num_rows > 0) {
 
-
                                             echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
             
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <!--<th>Link</th>-->
+                    <th>Link</th>
                     <th>Total Marks</th>
                     <th>Remarks</th>
-                    <th>Promote</th>
                     <th  class='text-center'>Actions</th>                       
                 </tr>
             </thead>
@@ -91,80 +89,67 @@ include 'database.php';
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <!--<th>Link</th>-->
+                        <th>Link</th>
                         <th>Total Marks</th>
                     <th>Remarks</th>
-                    <th>Promote</th>
                         <th  class='text-center'>Actions</th> 
                     </tr>
             </tfoot>
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                                $promoButton= "";
-                                                if( $row["roundNumber"] !== '1' ){
-                                                        $promoButton = "disabled";
-                                                }
-                                               
+                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                                                INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+                                                INNER JOIN questions on results.questionId=questions.id 
+                                                where 
+                                                projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " and projects_vs_jedges.jedgeId=" . $judgeId . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+                                                $questiojns_result = $conn->query($questiojns_list);
+
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
-                <td>" .substr($row["title"],0,25)."..</td>
-               <!-- <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>-->
+                <td>" . $row["title"] . "</td>
+                <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>
                 <td>" . $row["marks"] . "</td>
-                <td>" .substr($row["remarks"],0,25)."..</td>
-                            
-                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote btn btn-primary ".$promoButton."'>Promote</a></td>
+                <td>" . $row["remarks"] . "</td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
    
-                </tr>";
- $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
-INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
-INNER JOIN questions on results.questionId=questions.id 
-where 
-projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
-                                                $questiojns_result = $conn->query($questiojns_list);
-                                        ?>
-
+                </tr>" ?>
                                                 <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
-                                                        <div class="modal-header modal-form-header">
-                                                            <h5 class="modal-title text-white" id="exampleModalLabel">
-                                                                Round-I Results</h5>
-                                                            <button class="close text-white" type="button" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                            
-                                                        </div>
                                                             <div class="modal-header">
-                                                                <strong><?php echo $row['title']; ?></strong>
+                                                                <h3>Round-I Results</h3>
 
-                                                                
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
                                                             </div>
                                                             <div class="modal-body">
+
                                                                 <?php
                                                                 // output data of each row
                                                                 while ($ques = $questiojns_result->fetch_assoc()) {
                                                                 ?>
-                                                                   
                                                                     <div class="form-group row">
-                                                                        
                                                                         <div class="col-sm-9 add-item">
-                                                                            <strong><?php echo $ques["question"]; ?></strong>
-                                                                            <p for="exampleFormControlInput1"><?php echo $ques["description"]; ?></p>
-                                                                            
-                                                                    
+                                                                            <h5 class="modal-title" id="assignModalLabel">
+                                                                                <?php echo $ques["question"]; ?></h5>
+                                                                            <p> <?php echo $ques["description"]; ?></p>
+
                                                                         </div>
                                                                         <div class="col-sm-3 add-item">
-                                                                         <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>"  readonly>
-                                                                        
+                                                                            <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>" readonly>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">                                                                   </div>
                                                                 <?php } ?>
+                                                                <div class="form-group">
+                                                                    <h5 class="modal-title" id="assignModalLabel">Remarks</h5>
+                                                                    <label for="exampleFormControlTextarea1">
+                                                                        <?php echo $row["remarks"]; ?></label>
+                                                                </div>
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
@@ -173,8 +158,8 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <?php
-                                            }
+
+                                            <?php }
                                             echo "</tbody></table>" ?>
 
 
@@ -192,33 +177,6 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 
                     <?php include 'admin-footer.php'; ?>
 
-
- 
 </body>
-<script type="text/javascript">
- 
-$('.doPromote1').click(function() {
-    var id = $(this).attr('id');
-   alert(id);
-    $.ajax({
-      url : "promote.php",
-      type: "POST",
-      data : {
-        id: id }
-      ,
-      success: function(data)
-      {
-       
-        $.get("round1-results.php", function(data)
-              {
-          
-        });
-      }
-    });
-  });
 
-</script>
-<?php
-
-//print_r($_POST); ?>
 </html>
