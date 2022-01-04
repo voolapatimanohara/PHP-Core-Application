@@ -55,125 +55,14 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * FROM projects where roundNumber= '3' and status= '0' and projectType= 'Business'";
+  $project_list= "SELECT * FROM projects";
   $result = $conn->query($project_list);
 
   ?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Business Projects </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <?php  if ($result->num_rows > 0) {
-
-            echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
-            
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Program</th>
-                    <th>Sponsor</th>
-                    <th>Description</th>
-                    <th>Project Type</th>
-                    <th>Actions</th>                       
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Program</th>
-                    <th>Sponsor</th>
-                    <th>Description</th>
-                    <th>Project Type</th>
-                    <th>Actions</th>
-                </tr>
-            </tfoot>
-                <tbody>";
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                echo "<tr>
-                <td>".$row["id"]."</td>
-                <td>".$row["title"]."</td>
-                <td>".$row["program"]."</td>
-                <td>".$row["sponsor"]."</td>
-               <td>" .substr($row["pr_description"],0,25)."..</td>
-                <td>".$row["projectType"]."</td>
-                <td> <a href='#' data-toggle='modal' data-target='#finalProjectModel_".$row["id"]."'>
-                <i class='fa fa-external-link-alt'></i></a> </td>
-
-   
-                </tr>"?>
-                                        <div class="modal fade" id="finalProjectModel_<?php echo $row['id'] ?>"
-                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h5 class="modal-title" id="assignModalLabel">
-                                                            <?php echo $row["title"]; ?></h5>
-                                                        
-                                                        <button class="close" type="button" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                    
-                                                    <form>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Question-1</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" value ="Answer-01" readonly>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Question-2</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" value ="Answer-02" readonly>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlSelect1">Marks</label>
-                                                            <input type="text" class="form-control" id="exampleFormControlInput1" value ="50" readonly>
-                                                     
-                                                        </div>
-                                                        
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlTextarea1">Remarks</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"readonly>Remarkss</textarea>
-                                                        </div>
-                                                        
-                                                    </form>                                                 
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <?php }
-            echo "</tbody></table>"?>
-
-
-                                        <?php } ?>
-
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <!-- techo Projects-->
-                            <div class="container-fluid">
-                        
-                            <!-- Page Heading -->
-                            <?php
-
-  $project_list= "SELECT * FROM projects where roundNumber= '3' and status= '0' and projectType= 'Technology'";
-  $result = $conn->query($project_list);
-
-  ?>
-
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Technology Projects </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Final Projects </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

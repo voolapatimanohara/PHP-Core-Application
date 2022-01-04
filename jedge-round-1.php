@@ -76,7 +76,7 @@ if (isset($_POST["judgeAssignedId"])) {
                         <div class="container-fluid">
                             <!-- Page Heading -->
                             <?php
-                            $project_list = "SELECT *,projects.id as id, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.status='1' ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT *,projects.id as id, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.status='1' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
