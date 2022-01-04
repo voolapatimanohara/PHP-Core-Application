@@ -15,7 +15,7 @@ if(isset($_POST['save_judges']))
             $query_run = mysqli_query($conn, $query);
         }
        
-        $res= $conn->query("UPDATE projects SET status = '1' WHERE id = " . $prodId . "");
+        mysqli_query($conn, "UPDATE projects SET status = '1' WHERE id = " . $prodId . "");
         
         if($query_run)
         {
@@ -92,7 +92,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                             <!-- Page Heading -->
                             <?php
 
-  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '1' and projectType ='Business'";
+  $project_list= "SELECT * FROM projects where roundNumber= '1' and status= '0'";
   $result = $conn->query($project_list);
 
   ?>
@@ -207,23 +207,18 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                         <div class="form-group">
                                                         <label for="exampleFormControlSelect2">Assign Judges</label>
 
-                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="MultiselectjedgeId">
+                                                        <select size="8"   multiple="multiple" class="form-control someSelect" name="jedgeId[]" id="MultiselectjedgeId" required>
                                                         
                                                             <?php
                                                                 // Using database connection file here
                                                                 $judgelist = mysqli_query($conn, "SELECT id, firstName, lastName From login");  // Use select query here 
 
-                                                                while($data = mysqli_fetch_array($judgelist))
-                                                                {
-
-                                                                    $jdId= $data['id'];
-                                                                    $totalProforJudge = "SELECT * from projects_vs_jedges  where jedgeId = $jdId  and  roundNumber= '1' and status= '1'";
-  
-                                                                    if ($result = mysqli_query($conn, $totalProforJudge)) {
-                                                                    // Return the number of rows in result set
-                                                                    $totalProforJudgecount = mysqli_num_rows( $result );
-                                                                    
-                                                                }
+                                                                while($data = mysqli_fetch_array($judgelist))                                              {                                     $totalProforJudge = "SELECT count(*) countProj from projects_vs_jedges  where jedgeId = ".$data['id']."  and roundNumber= '1' and status= '1'";
+                                                                    $newResult = mysqli_query($conn, $totalProforJudge);
+                                                                    $totalProforJudgecount = 0;
+                                                                    while($rowNew = $newResult->fetch_assoc()) {
+                                                                        $totalProforJudgecount = $rowNew['countProj'];
+                                                                    }
                                                                     echo "<option value='". $data['id'] ."'>" .$data['firstName'].$data['lastName'] ."($totalProforJudgecount)</option>";  // displaying data in option menu
                                                                 }
                                                                 
@@ -234,7 +229,7 @@ $totalPro = "SELECT * from projects ORDER BY modifiedOn DESC";
                                                     </select>                                           
                                                         </div>
                                                         <div class="form-group">
-                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add" onclick='return window.confirm("Are you sure you want to submit?");'>
+                                                            <input class="btn btn-primary w-25" id="save-judge-round-1" type="submit" name="save_judges" value="Add">
                                                         </div>
                                                     </form> 
                                                     </div>
