@@ -100,6 +100,7 @@ include 'database.php';
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
+                                                $projectId= $row["id"];
 
                                                 if ($row["roundNumber"] !== '1') {
                                                     $class = "disabled";
@@ -128,58 +129,13 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                 //  print_r($ques);
                                         ?>
 
-                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3>Round-I Results 33333</h3>
-
-                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <?php
-                                                                // output data of each row
-                                                                while ($ques = $questiojns_result->fetch_assoc()) {
-
-                                                                ?>
-                                                                    <div class="form-group row">
-
-                                                                        <div class="col-sm-6 add-item">
-                                                                            <h6 class="modal-title" id="assignModalLabel">
-                                                                                <?php echo $ques["question"]; ?></h6>
-                                                                            <p for="exampleFormControlInput1"><?php echo $ques["description"]; ?></p>
-
-
-                                                                        </div>
-                                                                        <div class="col-sm-4 add-item">
-                                                                            <input class="form-control" type="text" value="<?php echo $ques["jedgeId"]; ?>" readonly>
-
-                                                                        </div>
-                                                                        <div class="col-sm-2 add-item">
-                                                                            <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>" readonly>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row"> </div>
-                                                                <?php } ?>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             <?php
                                             }
                                             echo "</tbody></table>" ?>
 
 
-                                        <?php } else {
-                                            echo "NO Records Found";
-                                        } ?>
+                                        <?php } ?>
 
                                     </div>
                                 </div>
@@ -261,63 +217,13 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                 $questiojns_result = $conn->query($questiojns_list);
                                         ?>
 
-                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3>Round-I Results333</h3>
-
-                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <?php
-                                                                // output data of each row
-                                                                while ($ques = $questiojns_result->fetch_assoc()) {
-                                                                ?>
-
-
-                                                                    <div class="form-group row">
-
-                                                                        <div class="col-sm-4 add-item">
-                                                                            <h6 class="modal-title" id="assignModalLabel">
-                                                                                <?php echo $ques["question"]; ?></h6>
-                                                                            <p for="exampleFormControlInput1"><?php echo $ques["description"]; ?></p>
-
-
-                                                                        </div>
-                                                                        <div class="col-sm-4 add-item">
-                                                                            <input class="form-control" type="text" value="<?php echo $ques["jedgeId"]; ?>" readonly>
-
-                                                                        </div>
-                                                                        <div class="col-sm-2 add-item">
-                                                                            <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>" readonly>
-
-                                                                        </div>
-                                                                        <div class="col-sm-2 add-item">
-                                                                            <input class="form-control" type="text" value="<?php echo $ques["remarks"]; ?>" readonly>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row"> </div>
-                                                                <?php } ?>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             <?php
                                             }
                                             echo "</tbody></table>" ?>
 
 
-                                        <?php } else {
-                                            echo "No Records Found";
-                                        } ?>
+                                        <?php } ?>
 
                                     </div>
                                 </div>
@@ -355,7 +261,56 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 </script>
 <?php
 
-//print_r($_POST); 
-?>
+
+$roundMarkesList= "SELECT projects_vs_jedges.projectId,projects_vs_jedges.jedgeId,results.questionId,results.marks,results.remarks FROM `projects_vs_jedges` inner join results on results.judgeAssignedId=projects_vs_jedges.id where projects_vs_jedges.projectId=1";
+$result2 = $conn->query($roundMarkesList);
+//print_r($roundMarkesList); ?>
+                    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $projectId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3>Round-I Results </h3>
+
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                               <?php while ($ques = $questiojns_result->fetch_assoc()) {
+
+                                   
+                                                                    $judgeId=  $ques['jedgeId'];
+                                                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
+                                                                    $judge_result = $conn->query($judgenames_list);
+                                                                    
+                                                                    $judgeName= $judge_result->fetch_assoc();
+                                                                    
+
+                                                                ?>
+                                                                
+                                    <table class="table table-bordered">
+                                       
+                                        
+                                        <tr>
+                                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
+                                           
+                                            <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
+                                            <td><?php echo $ques["marks"]; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo substr($ques["remarks"],0,25);?></td>
+                                           
+                                           
+                                        </tr>
+                                    </table>
+                                    <?php }?>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 </html>
