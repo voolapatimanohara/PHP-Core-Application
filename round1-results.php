@@ -158,7 +158,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Business Round -I Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Business Round -I Results <a href="exportData.php" class="btn btn-success float-right"> Export</a></h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -192,7 +192,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-
+                                                $projectId= $row["id"];
                                                 if ($row["roundNumber"] !== '1') {
                                                     $class = "disabled";
                                                 }

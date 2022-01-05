@@ -3,6 +3,7 @@ include 'database.php';
 if (isset($_SESSION['id'])) {
     $judgeId = $_SESSION['id'];
 }
+//echo $judgeId;
 ?>
 
 <body id="page-top">
@@ -62,8 +63,10 @@ if (isset($_SESSION['id'])) {
   INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
   INNER JOIN questions on results.questionId=questions.id 
   where 
-  projects_vs_jedges.jedgeId=3 and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId, results.remarks";
+  projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
+                           // print_r($result);
+                            
                             ?>
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
