@@ -11692,3 +11692,4 @@ footer a:hover, footer a:active, footer a:focus {
     form .row, .modal-body .row, .login .row, .about .row, .contactus .row{
       margin-left: -0.75rem !important;
     }
+    .sidebar .nav-item .nav-link{padding: 0.75em !important;}
