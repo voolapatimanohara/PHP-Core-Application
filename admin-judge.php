@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-lg-6 mb-6">
                                     <div class="p-5">
-                                    <h1>Upload Excel File</h1>
+                                    <h5>Upload Excel File</h5>
                                     <form method="POST" action="read-excel.php" enctype="multipart/form-data">
                                         <div class="form-group">
                                             
@@ -118,7 +118,7 @@
                                             <label> <a href="./test.xlsx">Download Sample File</a></label>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" name="submit" class="btn btn-success">Upload</button>
+                                            <button type="submit" name="submit" class="btn btn-primary">Upload</button>
                                         </div>
                                     </form>
                                 </div>

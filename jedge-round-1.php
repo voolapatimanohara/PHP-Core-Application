@@ -1,10 +1,33 @@
 <?php include 'admin-header.php';
-include 'database.php';
+include 'database.php'; 
 if (isset($_SESSION['id'])) {
     $judgeId = $_SESSION['id'];
 }
-//echo $judgeId;
+if (isset($_POST["judgeAssignedId"])) {
 ?>
+    <!-- <pre><?php
+                // print_r($_POST);
+                // exit;
+                ?> </pre>  -->
+<?php
+
+    for ($x = 0; $x < count($_POST["judgeAssignedId"]); $x++) {
+        $str[] = "({$_POST["judgeAssignedId"][$x]},{$_POST["questionId"][$x]},{$_POST["marks"][$x]},'{$_POST["remarks"]}')";
+    }
+    $s = implode(',', $str);
+    $sql = $conn->query("INSERT INTO results (judgeAssignedId,questionId, marks,remarks) VALUES $s");
+
+    $conn->query("UPDATE projects_vs_jedges SET status = '0' WHERE id = " . $_POST['judgeAssignedId'][0] . "");
+
+    if (!$sql) {
+        die("MySQL query failed.");
+    } else {
+        $response = array(
+            "status" => "alert-success",
+            "message" => "New Judge Added succesfully ."
+        );
+    }
+}  ?>
 
 <body id="page-top">
 
@@ -50,27 +73,17 @@ if (isset($_SESSION['id'])) {
                             $projectcount = mysqli_num_rows($result);
                         }
                         ?>
-
-
-
-
                         <div class="container-fluid">
-
                             <!-- Page Heading -->
                             <?php
-
-                            $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
-  INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
-  INNER JOIN questions on results.questionId=questions.id 
-  where 
-  projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=1 group by  projects_vs_jedges.projectId, results.remarks";
+                            $project_list = "SELECT *,projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.status='1' and projectType='Business' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
-                           // print_r($result);
-                            
+
                             ?>
+
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Round -I Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Business Projects </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -82,9 +95,7 @@ if (isset($_SESSION['id'])) {
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Link</th>
-                    <th>Total Marks</th>
-                    <th>Remarks</th>
+                    <th>Project Type</th>
                     <th  class='text-center'>Actions</th>                       
                 </tr>
             </thead>
@@ -92,67 +103,90 @@ if (isset($_SESSION['id'])) {
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Link</th>
-                        <th>Total Marks</th>
-                    <th>Remarks</th>
+                        <th>Project Type</th>
                         <th  class='text-center'>Actions</th> 
                     </tr>
             </tfoot>
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
-                                                INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
-                                                INNER JOIN questions on results.questionId=questions.id 
-                                                where 
-                                                projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+                                                $questiojns_list = "SELECT * FROM questions where status='1'";
                                                 $questiojns_result = $conn->query($questiojns_list);
-
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
                 <td>" . $row["title"] . "</td>
-                <td><a href='" . $row["pr_url"] . "'target='_blank''>" . $row["pr_url"] . "</a></td>
-                <td>" . $row["marks"] . "</td>
-                <td>" . $row["remarks"] . "</td>
+                <td>" . $row["projectType"] . "</td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
-                <i class='fa fa-eye'></i></a> </td>
+                <i class='fa fa-external-link-alt'></i></a> </td>
              
    
                 </tr>" ?>
-                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3>Round-I Results</h3>
 
-                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <div class="modal-header modal-form-header">
+                                                                <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                               Round 1</h5>
+                                                                <button class="close text-white" type="button" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">×</span>
                                                                 </button>
                                                             </div>
+                                                            
+                                                            
+                                                                
+                                                                
+                                                                 
+                                                               
                                                             <div class="modal-body">
+                                                            <div class="header my-0">
+                                                                    <h5>Project Title: <?php echo $row["title"]; ?></h5>
+                                                                </div> 
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post">
+                                                                    <?php
+                                                                    // output data of each row
+                                                                    while ($ques = $questiojns_result->fetch_assoc()) {
 
-                                                                <?php
-                                                                // output data of each row
-                                                                while ($ques = $questiojns_result->fetch_assoc()) {
-                                                                ?>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-9 add-item">
-                                                                            <h5 class="modal-title" id="assignModalLabel">
-                                                                                <?php echo $ques["question"]; ?></h5>
-                                                                            <p> <?php echo $ques["description"]; ?></p>
+
+                                                                    ?>
+                                                                        <?php // print_r($ques); 
+                                                                        ?>
+                                                                        <div class="form-group row">
+                                                                            <input type="hidden" name="judgeAssignedId[]" value="<?php echo $row["pjid"]; ?>">
+                                                                            <div class="col-sm-9 add-item">
+                                                                                <h6 class="modal-title">
+                                                                                    <?php echo $ques["question"]; ?></h6>
+                                                                                <input type="hidden" name="questionId[]" value="<?php echo $ques["id"]; ?>"> 
+
+                                                                                <p> <?php echo $ques["description"]; ?></p>
+                                                                            </div>
+                                                                            <div class="col-sm-3 add-item">
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleFormControlSelect1">Add Markes</label>
+                                                                                    <select class="form-control" name="marks[]" id="exampleFormControlSelect1">
+                                                                                        <option value="0">0</option>
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
 
                                                                         </div>
-                                                                        <div class="col-sm-3 add-item">
-                                                                            <input class="form-control" type="text" value="<?php echo $ques["marks"]; ?>" readonly>
-                                                                        </div>
+
+
+                                                                    <?php } ?>
+
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlTextarea1">Remarks</label>
+                                                                        <textarea name="remarks" class="form-control" id="remarksTextarea1" rows="3"></textarea>
                                                                     </div>
-                                                                <?php } ?>
-                                                                <div class="form-group">
-                                                                    <h5 class="modal-title" id="assignModalLabel">Remarks</h5>
-                                                                    <label for="exampleFormControlTextarea1">
-                                                                        <?php echo $row["remarks"]; ?></label>
-                                                                </div>
+                                                                    <input class="btn btn-primary" type="submit" value="Add">
 
+                                                                </form>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
@@ -166,14 +200,146 @@ if (isset($_SESSION['id'])) {
                                             echo "</tbody></table>" ?>
 
 
-                                        <?php } ?>
+                            <?php }else{echo "No Records Found"; } ?>
+
+                                    </div>
+                                </div>
+                            
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <!-- Page Heading -->
+                            <?php
+                            $project_list = "SELECT *,projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.status='1' and projectType='Technology' ORDER BY modifiedOn DESC";
+                            $result = $conn->query($project_list);
+
+                            ?>
+
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-white">Technology Projects </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <?php if ($result->num_rows > 0) {
+
+                                            echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+            
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Project Type</th>
+                    <th  class='text-center'>Actions</th>                       
+                </tr>
+            </thead>
+            <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Project Type</th>
+                        <th  class='text-center'>Actions</th> 
+                    </tr>
+            </tfoot>
+                <tbody>";
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                $questiojns_list = "SELECT * FROM questions where status='1'";
+                                                $questiojns_result = $conn->query($questiojns_list);
+                                                echo "<tr>
+                <td>" . $row["id"] . "</td>
+                <td>" . $row["title"] . "</td>
+                <td>" . $row["projectType"] . "</td>
+                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
+                <i class='fa fa-external-link-alt'></i></a> </td>
+             
+   
+                </tr>" ?>
+                                                <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-header modal-form-header">
+                                                                <h5 class="modal-title text-white" id="exampleModalLabel">
+                                                                Round 1</h5>
+                                                                <button class="close text-white" type="button" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            
+                                                            
+                                                                
+                                                                
+                                                                 
+                                                               
+                                                            <div class="modal-body">
+                                                            <div class="header my-0">
+                                                                    <h5>Project Title: <?php echo $row["title"]; ?></h5>
+                                                                </div> 
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post">
+                                                                    <?php
+                                                                    // output data of each row
+                                                                    while ($ques = $questiojns_result->fetch_assoc()) {
+
+
+                                                                    ?>
+                                                                        <?php // print_r($ques); 
+                                                                        ?>
+                                                                        <div class="form-group row">
+                                                                            <input type="hidden" name="judgeAssignedId[]" value="<?php echo $row["pjid"]; ?>">
+                                                                            <div class="col-sm-9 add-item">
+                                                                                <h6 class="modal-title">
+                                                                                    <?php echo $ques["question"]; ?></h6>
+                                                                                <input type="hidden" name="questionId[]" value="<?php echo $ques["id"]; ?>"> 
+
+                                                                                <p> <?php echo $ques["description"]; ?></p>
+                                                                            </div>
+                                                                            <div class="col-sm-3 add-item">
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleFormControlSelect1">Add Markes</label>
+                                                                                    <select class="form-control" name="marks[]" id="exampleFormControlSelect1">
+                                                                                        <option value="0">0</option>
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    <?php } ?>
+
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlTextarea1">Remarks</label>
+                                                                        <textarea name="remarks" class="form-control" id="remarksTextarea1" rows="3"></textarea>
+                                                                    </div>
+                                                                    <input class="btn btn-primary" type="submit" value="Add">
+
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <?php }
+                                            echo "</tbody></table>" ?>
+
+
+<?php }else{echo "No Records Found"; } ?>
 
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-
                     </div>
                     <!-- End of Main Content -->
                     <!-- Logout Modal-->

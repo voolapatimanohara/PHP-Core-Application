@@ -66,7 +66,7 @@ include 'database.php';
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Technology Round -I Results <a href="exportData.php" class="btn btn-success float-right"> Export</a></h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Technology Round -I Results <a href="exportData.php" class="btn btn-primary float-right"> Export</a></h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -100,7 +100,7 @@ include 'database.php';
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                                $projectId= $row["id"];
+                                                $tectprojectId= $row["id"];
 
                                                 if ($row["roundNumber"] !== '1') {
                                                     $class = "disabled";
@@ -112,8 +112,8 @@ include 'database.php';
                  <td>" . $row["marks"] . "</td>
                 
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
-                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
+                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote-tech btn btn-primary' id=" . $row["id"] . ">Promote</a></td>
+                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_Technology_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
    
@@ -158,7 +158,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Business Round -I Results <a href="exportData.php" class="btn btn-success float-right"> Export</a></h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Business Round -I Results <a href="exportData.php" class="btn btn-primary float-right"> Export</a></h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -203,7 +203,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                  <td>" . $row["marks"] . "</td>
                
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
+                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote-business btn btn-primary' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -241,7 +241,24 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 
 </body>
 <script type="text/javascript">
-    $('.doPromote1').click(function() {
+    $('.doPromote-business').click(function() {
+        var id = $(this).attr('id');
+        alert(id);
+        $.ajax({
+            url: "promote.php",
+            type: "POST",
+            data: {
+                id: id
+            },
+            success: function(data) {
+
+                $.get("round1-results.php", function(data) {
+
+                });
+            }
+        });
+    });
+    $('.doPromote-tech').click(function() {
         var id = $(this).attr('id');
         alert(id);
         $.ajax({
@@ -262,9 +279,57 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 <?php
 
 
+
 $roundMarkesList= "SELECT projects_vs_jedges.projectId,projects_vs_jedges.jedgeId,results.questionId,results.marks,results.remarks FROM `projects_vs_jedges` inner join results on results.judgeAssignedId=projects_vs_jedges.id where projects_vs_jedges.projectId=1";
 $result2 = $conn->query($roundMarkesList);
 //print_r($roundMarkesList); ?>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_Technology_<?php echo $tectprojectId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3>Round-I Results </h3>
+
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                               <?php while ($ques = $questiojns_result->fetch_assoc()) {
+
+                                   
+                                                                    $judgeId=  $ques['jedgeId'];
+                                                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
+                                                                    $judge_result = $conn->query($judgenames_list);
+                                                                    
+                                                                    $judgeName= $judge_result->fetch_assoc();
+                                                                    
+
+                                                                ?>
+                                                                
+                                    <table class="table table-bordered">
+                                       
+                                        
+                                        <tr>
+                                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
+                                           
+                                            <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
+                                            <td><?php echo $ques["marks"]; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo substr($ques["remarks"],0,25);?></td>
+                                           
+                                           
+                                        </tr>
+                                    </table>
+                                    <?php }?>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $projectId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
