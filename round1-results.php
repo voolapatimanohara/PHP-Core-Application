@@ -112,7 +112,7 @@ include 'database.php';
                  <td>" . $row["marks"] . "</td>
                 
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote-tech btn btn-primary' id=" . $row["id"] . ">Promote</a></td>
+                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote-tech btn btn-primary $class' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_Technology_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -203,7 +203,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                  <td>" . $row["marks"] . "</td>
                
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote-business btn btn-primary' id=" . $row["id"] . ">Promote</a></td>
+                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote-business btn btn-primary $class' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -243,7 +243,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
 <script type="text/javascript">
     $('.doPromote-business').click(function() {
         var id = $(this).attr('id');
-        alert(id);
+        //alert(id);
         $.ajax({
             url: "promote.php",
             type: "POST",
@@ -260,7 +260,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
     });
     $('.doPromote-tech').click(function() {
         var id = $(this).attr('id');
-        alert(id);
+       // alert(id);
         $.ajax({
             url: "promote.php",
             type: "POST",
@@ -311,9 +311,12 @@ $result2 = $conn->query($roundMarkesList);
                                         
                                         <tr>
                                             <td rowspan="2"><?php echo $ques["description"]; ?></td>
-                                           
-                                            <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
-                                            <td><?php echo $ques["marks"]; ?></td>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
+                                                    <td><?php echo $ques["marks"]; ?></td>
+                                                </tr>
+                                            </table>
                                         </tr>
                                         <tr>
                                             <td><?php echo substr($ques["remarks"],0,25);?></td>
