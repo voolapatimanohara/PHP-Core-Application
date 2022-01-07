@@ -99,10 +99,11 @@ include 'database.php';
             </tfoot>
                 <tbody>";
                                             // output data of each row
+                                            $promobusinessclass= "";
                                             while ($row = $result->fetch_assoc()) {
                                                
                                                 if( $row["roundNumber"] !== '2' ){
-                                                        $class = "disabled";
+                                                        $promobusinessclass = "disabled";
                                                 }
                                                
                                                 echo "<tr>
@@ -111,7 +112,7 @@ include 'database.php';
                  <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
+                <td> <a href='promote-final.php?id=" . $row["id"] . "' class=' doPromote-semi-business btn btn-primary $promobusinessclass' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -226,11 +227,14 @@ projects_vs_jedges.roundNumber=2 and projects_vs_jedges.projectId=" . $row['id']
             </tfoot>
                 <tbody>";
                                             // output data of each row
+                                            $promobtnclass="";
                                             while ($row = $result->fetch_assoc()) {
                                                
-                                                if( $row["roundNumber"] !== '2' ){
-                                                        $class = "disabled";
+                                                if($row["roundNumber"] !== '2' ){
+                                                   
+                                                        $promobtnclass = "disabled";
                                                 }
+                                                
                                                
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
@@ -238,7 +242,7 @@ projects_vs_jedges.roundNumber=2 and projects_vs_jedges.projectId=" . $row['id']
                  <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
+                <td> <a href='promote-final.php?id=". $row["id"] . "' class='doPromote-semi-tech btn btn-primary $promobtnclass' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -316,11 +320,11 @@ projects_vs_jedges.roundNumber=2 and projects_vs_jedges.projectId=" . $row['id']
 </body>
 <script type="text/javascript">
  
-$('.doPromote1').click(function() {
+$('.doPromote-semi-business').click(function() {
     var id = $(this).attr('id');
-   alert(id);
+  
     $.ajax({
-      url : "promote.php",
+      url : "promote-final.php",
       type: "POST",
       data : {
         id: id }
@@ -335,7 +339,25 @@ $('.doPromote1').click(function() {
       }
     });
   });
-
+  $('.doPromote-semi-tech').click(function() {
+    var id = $(this).attr('id');
+   
+    $.ajax({
+      url : "promote-final.php",
+      type: "POST",
+      data : {
+        id: id }
+      ,
+      success: function(data)
+      {
+       
+        $.get("semi-final-results.php", function(data)
+              {
+          
+        });
+      }
+    });
+  });
 </script>
 <?php
 
