@@ -100,7 +100,7 @@ include 'database.php';
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                                $tectprojectId= $row["id"];
+                                                $tectprojectId = $row["id"];
 
                                                 if ($row["roundNumber"] !== '1') {
                                                     $class = "disabled";
@@ -118,18 +118,18 @@ include 'database.php';
              
    
                 </tr>";
-                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects_vs_jedges.jedgeId,projects.projectType,projects.title,results.marks, results.remarks, results.judgeAssignedId  from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                                                $questiojns_list = "SELECT results.questionId,questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects_vs_jedges.jedgeId,projects.projectType,projects.title,results.marks, results.remarks, results.judgeAssignedId  from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
 INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
 INNER JOIN questions on results.questionId=questions.id 
 where 
-projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . "   ORDER BY projects_vs_jedges.modifiedOn DESC";
+projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " group by results.questionId  ORDER BY projects_vs_jedges.modifiedOn DESC";
                                                 $questiojns_result = $conn->query($questiojns_list);
                                                 // print_r($questiojns_result);
                                                 // $ques = $questiojns_result->fetch_assoc();
                                                 //  print_r($ques);
                                         ?>
 
-                                                
+
                                             <?php
                                             }
                                             echo "</tbody></table>" ?>
@@ -192,7 +192,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                                $projectId= $row["id"];
+                                                $projectId = $row["id"];
                                                 if ($row["roundNumber"] !== '1') {
                                                     $class = "disabled";
                                                 }
@@ -217,7 +217,7 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                                                 $questiojns_result = $conn->query($questiojns_list);
                                         ?>
 
-                                                
+
                                             <?php
                                             }
                                             echo "</tbody></table>" ?>
@@ -276,106 +276,109 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
         });
     });
 </script>
-<?php
 
-
-
-$roundMarkesList= "SELECT projects_vs_jedges.projectId,projects_vs_jedges.jedgeId,results.questionId,results.marks,results.remarks FROM `projects_vs_jedges` inner join results on results.judgeAssignedId=projects_vs_jedges.id where projects_vs_jedges.projectId=1";
-$result2 = $conn->query($roundMarkesList);
-//print_r($roundMarkesList); ?>
 <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_Technology_<?php echo $tectprojectId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3>Round-I Results </h3>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Round-I Results </h3>
 
-                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                               <?php while ($ques = $questiojns_result->fetch_assoc()) {
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php while ($ques = $questiojns_result->fetch_assoc()) {
 
-                                   
-                                                                    $judgeId=  $ques['jedgeId'];
-                                                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
-                                                                    $judge_result = $conn->query($judgenames_list);
-                                                                    
-                                                                    $judgeName= $judge_result->fetch_assoc();
-                                                                    
 
-                                                                ?>
-                                                                
-                                    <table class="table table-bordered">
-                                       
-                                        
+                    $judgeId =  $ques['jedgeId'];
+                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId";
+                    $judge_result = $conn->query($judgenames_list);
+
+                    $judgeName = $judge_result->fetch_assoc();
+
+
+                ?>
+
+                    <table class="table table-bordered">
+
+
+                        <tr>
+                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
+                            <td>
+                                <table>
+                                    <?php
+                                    $roundMarkesList = "SELECT projects_vs_jedges.projectId,projects_vs_jedges.jedgeId,login.firstName,login.lastName,results.questionId,results.marks,results.remarks FROM projects_vs_jedges inner join results on results.judgeAssignedId=projects_vs_jedges.id inner join login on login.id=projects_vs_jedges.jedgeId where projects_vs_jedges.projectId=$tectprojectId and results.questionId=" . $ques['questionId'] . "";
+                                    $result2 = $conn->query($roundMarkesList);
+                                    //print_r($roundMarkesList); 
+                                    ?>
+                                    <?php while ($jdMarks = $result2->fetch_assoc()) { ?>
                                         <tr>
-                                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
-                                           
-                                            <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
-                                            <td><?php echo $ques["marks"]; ?></td>
+                                            <td><?php echo $jdMarks["firstName"] . $jdMarks["lastName"]; ?></td>
+                                            <td><?php echo $jdMarks["marks"]; ?></td>
                                         </tr>
-                                        <tr>
-                                            <td><?php echo substr($ques["remarks"],0,25);?></td>
-                                           
-                                           
-                                        </tr>
-                                    </table>
-                                    <?php }?>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+                                    <?php } ?>
+                                </table>
+                            </td>
+                            <!-- <td><?php // echo substr($ques["remarks"], 0, 25); 
+                                ?></td> -->
+                        </tr>
+                    </table>
+                <?php } ?>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $projectId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3>Round-I Results </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="roundProjectModel_<?php echo $projectId ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Round-I Results </h3>
 
-                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                               <?php while ($ques = $questiojns_result->fetch_assoc()) {
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php while ($ques = $questiojns_result->fetch_assoc()) {
 
-                                   
-                                                                    $judgeId=  $ques['jedgeId'];
-                                                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
-                                                                    $judge_result = $conn->query($judgenames_list);
-                                                                    
-                                                                    $judgeName= $judge_result->fetch_assoc();
-                                                                    
 
-                                                                ?>
-                                                                
-                                    <table class="table table-bordered">
-                                       
-                                        
-                                        <tr>
-                                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
-                                           
-                                            <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
-                                            <td><?php echo $ques["marks"]; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><?php echo substr($ques["remarks"],0,25);?></td>
-                                           
-                                           
-                                        </tr>
-                                    </table>
-                                    <?php }?>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+                    $judgeId =  $ques['jedgeId'];
+                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId";
+                    $judge_result = $conn->query($judgenames_list);
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    $judgeName = $judge_result->fetch_assoc();
+
+
+                ?>
+
+                    <table class="table table-bordered">
+
+
+                        <tr>
+                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
+
+                            <td><?php echo $judgeName["firstName"] . $judgeName["lastName"]; ?></td>
+                            <td><?php echo $ques["marks"]; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php echo substr($ques["remarks"], 0, 25); ?></td>
+
+
+                        </tr>
+                    </table>
+                <?php } ?>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>
