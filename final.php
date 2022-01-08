@@ -273,7 +273,7 @@ $result = $conn->query($project_list);
                                 <div class="table-responsive">
                                     <?php  if ($result->num_rows > 0) {
 
-        echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+        echo "<table class='table table-bordered' id='dataTable2' width='100%' cellspacing='0'>
         
         <thead>
             <tr>

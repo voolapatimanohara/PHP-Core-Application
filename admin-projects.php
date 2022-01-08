@@ -168,20 +168,25 @@ $mentor = $_POST['mentor'];
 
 
                            </div>
+                           <div class="col-lg-6 mb-6">
+                                    <div class="p-5">
+                                    <h5>Upload Projects</h5>
+                                    <form method="POST" action="import-projects.php" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            
+                                            <input type="file" name="uploadFile" class="form-control" require />
+                                            <label> <a href="./projects.xlsx">Download Sample Projects File</a></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" name="submit" class="btn btn-primary">Upload</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 </div>
                             </div>
                       
 
-
-                        
-
-
-
-                            
-                      
-                        
-
-                        <div class="container">
+                        <div class="container ">
                         
                         <!-- Page Heading -->
                         <?php
@@ -339,7 +344,7 @@ $mentor = $_POST['mentor'];
                                 <div class="table-responsive">
                                     <?php  if ($result->num_rows > 0) {
 
-        echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+        echo "<table class='table table-bordered' id='dataTable2' width='100%' cellspacing='0'>
         
         <thead>
             <tr>
