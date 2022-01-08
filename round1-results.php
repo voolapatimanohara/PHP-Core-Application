@@ -305,33 +305,36 @@ $result2 = $conn->query($roundMarkesList);
                                <?php while ($ques = $questiojns_result->fetch_assoc()) {
 
                                    
-                                                                    $judgeId=  $ques['jedgeId'];
-                                                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
-                                                                    $judge_result = $conn->query($judgenames_list);
-                                                                    
-                                                                    $judgeName= $judge_result->fetch_assoc();
-                                                                    
+                                    $judgeId=  $ques['jedgeId'];
+                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
+                                    $judge_result = $conn->query($judgenames_list);
+                                    
+                                    $judgeName= $judge_result->fetch_assoc();
+                                    
 
-                                                                ?>
-                                                                
-                                    <table class="table table-bordered">
-                                       
-                                        
-                                        <tr>
-                                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
+                                ?>
+                                <table  class="table table-bordered">
+                                    <tr>
+                                        <td><?php echo $ques["description"]; ?></td>
+                                        <td>
                                             <table class="table table-bordered">
+
                                                 <tr>
                                                     <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
                                                     <td><?php echo $ques["marks"]; ?></td>
                                                 </tr>
+                                                <tr>
+                                                    <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
+                                                    <td><?php echo $ques["marks"]; ?></td>
+                                                </tr>
+                                                <!-- <tr>
+                                                    <td><?php //echo substr($ques["remarks"],0,25);?></td></tr> -->
                                             </table>
-                                        </tr>
-                                        <tr>
-                                            <td><?php echo substr($ques["remarks"],0,25);?></td>
-                                           
-                                           
-                                        </tr>
-                                    </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                                                
+                                    
                                     <?php }?>
                                 </div>
                                 <div class="modal-footer">

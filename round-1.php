@@ -21,7 +21,7 @@ if(isset($_POST['save_judges']))
         {
             $_SESSION['status'] = "Inserted Succesfully";
             
-            echo "alert(Succesfully)";
+           // echo "alert(Succesfully)";
             header("Location: round-1.php");
         }
         else
