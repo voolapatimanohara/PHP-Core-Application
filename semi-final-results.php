@@ -56,24 +56,27 @@ include 'database.php';
                             <?php
 
                             $project_list = "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
-  INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
-  INNER JOIN questions on results.questionId=questions.id 
-  where projects.projectType = 'Business' and
-  projects_vs_jedges.roundNumber=2 group by projects_vs_jedges.projectId, results.remarks";
+                            INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+                            INNER JOIN questions on results.questionId=questions.id 
+                            where projects.projectType = 'Business' and
+                            projects_vs_jedges.roundNumber=2 group by projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
 
                             ?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Business  Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Business  Results 
+                                    <?php if($result->num_rows > 0){?>
+                                        <a href="exportSemiFinalBusinessData.php" class="btn btn-primary float-right"> Export</a> 
+                                    <?php  } ?></h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <?php if ($result->num_rows > 0) {
 
 
-                                            echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+                                            echo "<table class='table table-bordered' id='dataTable2' width='100%' cellspacing='0'>
             
             <thead>
                 <tr>
@@ -189,12 +192,16 @@ projects_vs_jedges.roundNumber=2 and projects_vs_jedges.projectId=" . $row['id']
   where projects.projectType = 'Technology' and
   projects_vs_jedges.roundNumber=2 group by projects_vs_jedges.projectId, results.remarks";
                             $result = $conn->query($project_list);
+                            
 
                             ?>
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Technology Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Technology Results  
+                                        <?php if($result->num_rows > 0){?>
+                                            <a href="exportSemiFinalTechData.php" class="btn btn-primary float-right"> Export</a>
+                                        <?php } ?></h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

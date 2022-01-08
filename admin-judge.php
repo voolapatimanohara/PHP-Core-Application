@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-lg-6 mb-6">
                                     <div class="p-5">
-                                    <h5>Upload Excel File</h5>
+                                    <h5>Upload Judges</h5>
                                     <form method="POST" action="read-excel.php" enctype="multipart/form-data">
                                         <div class="form-group">
                                             
@@ -189,12 +189,7 @@
                         <!-- Content Column -->
                         <div class="container-fluid">
 
-                            <!-- Page Heading -->
-
-
-
-
-                            <!-- Page Heading -->
+                        
                             <?php
 
                             $judge_list = "SELECT * FROM login where userType='1' ORDER BY modifiedOn DESC ";
