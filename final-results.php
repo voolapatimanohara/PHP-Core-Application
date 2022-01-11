@@ -66,14 +66,18 @@ include 'database.php';
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Business  Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Business  Results 
+                                        <?php if ($result->num_rows > 0) { ?>
+                                            <a href="exportFinalBusinessData.php" class="btn btn-primary float-right"> Export</a>
+                                        <?php } ?>
+                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <?php if ($result->num_rows > 0) {
 
 
-                                            echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+                                            echo "<table class='table table-bordered' id='dataTable2' width='100%' cellspacing='0'>
             
             <thead>
                 <tr>
@@ -99,10 +103,11 @@ include 'database.php';
             </tfoot>
                 <tbody>";
                                             // output data of each row
+                                            $promobusinessclass= "";
                                             while ($row = $result->fetch_assoc()) {
                                                
                                                 if( $row["roundNumber"] !== '3' ){
-                                                        $class = "disabled";
+                                                        $promobusinessclass = "disabled";
                                                 }
                                                
                                                 echo "<tr>
@@ -111,7 +116,7 @@ include 'database.php';
                  <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
+                <td> <a href='winners.php?id=" . $row["id"] . "' class=' doPromote-final-business btn btn-primary $promobusinessclass' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -129,7 +134,7 @@ projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id']
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h3>Final Results</h3>
+                                                                <h3>Semi Final Results</h3>
 
                                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">×</span>
@@ -193,7 +198,11 @@ projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id']
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-white">Technology Results </h6>
+                                    <h6 class="m-0 font-weight-bold text-white">Technology Results 
+                                        <?php if ($result->num_rows > 0) { ?>
+                                            <a href="exportFinalTechData.php" class="btn btn-primary float-right"> Export</a> 
+                                        <?php } ?>
+                                    </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -226,11 +235,14 @@ projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id']
             </tfoot>
                 <tbody>";
                                             // output data of each row
+                                            $promobtnclass="";
                                             while ($row = $result->fetch_assoc()) {
                                                
-                                                if( $row["roundNumber"] !== '3' ){
-                                                        $class = "disabled";
+                                                if($row["roundNumber"] !== '3' ){
+                                                   
+                                                        $promobtnclass = "disabled";
                                                 }
+                                                
                                                
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
@@ -238,7 +250,7 @@ projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id']
                  <td>" . $row["marks"] . "</td>
                 <td>" . $row["remarks"] . "</td>
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote btn btn-primary'>Promote</a></td>
+                <td> <a href='winners.php?id=". $row["id"] . "' class='doPromote-final-tech btn btn-primary $promobtnclass' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
@@ -256,7 +268,7 @@ projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id']
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h3>Final Results</h3>
+                                                                <h3>Semi Final Results</h3>
 
                                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">×</span>
@@ -316,11 +328,11 @@ projects_vs_jedges.roundNumber=3 and projects_vs_jedges.projectId=" . $row['id']
 </body>
 <script type="text/javascript">
  
-$('.doPromote1').click(function() {
+$('.doPromote-final-business').click(function() {
     var id = $(this).attr('id');
-   alert(id);
+  
     $.ajax({
-      url : "promote.php",
+      url : "winners.php",
       type: "POST",
       data : {
         id: id }
@@ -335,7 +347,25 @@ $('.doPromote1').click(function() {
       }
     });
   });
-
+  $('.doPromote-final-tech').click(function() {
+    var id = $(this).attr('id');
+   
+    $.ajax({
+      url : "winners.php",
+      type: "POST",
+      data : {
+        id: id }
+      ,
+      success: function(data)
+      {
+       
+        $.get("final-results.php", function(data)
+              {
+          
+        });
+      }
+    });
+  });
 </script>
 <?php
 

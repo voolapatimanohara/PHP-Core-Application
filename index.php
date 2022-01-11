@@ -1,4 +1,4 @@
-S
+
 <?php
 if (isset($_SESSION['errors']))
 {
