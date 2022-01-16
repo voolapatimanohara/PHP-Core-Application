@@ -170,6 +170,7 @@ if (isset($_SESSION['id'])) {
                             </div>
 
                         </div>
+                        
                         <div class="container-fluid">
 
 <!-- Page Heading -->
@@ -237,7 +238,7 @@ $result = $conn->query($project_list);
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3>Semi Final Results</h3>
+                                    <h3>Round-I Results</h3>
 
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>

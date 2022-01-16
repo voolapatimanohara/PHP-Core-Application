@@ -16,7 +16,7 @@ if (isset($_POST["judgeAssignedId"])) {
     }
     $s = implode(',', $str);
     $sql = $conn->query("INSERT INTO results (judgeAssignedId,questionId, marks,remarks) VALUES $s");
-
+    $sql2 = $conn->query("INSERT INTO round_one_results (project_id,judge_id,questionId, roundNumber,marks,remarks) VALUES $s");
     $conn->query("UPDATE projects_vs_jedges SET status = '0' WHERE id = " . $_POST['judgeAssignedId'][0] . "");
 
     if (!$sql) {
@@ -312,6 +312,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                                         ?>
                                                                         <div class="form-group row">
                                                                             <input type="hidden" name="judgeAssignedId[]" value="<?php echo $row["pjid"]; ?>">
+                                                                            <input type="hidden" name="roundNumber[]" value="1">
                                                                             <div class="col-sm-9 add-item">
                                                                                 <h6 class="modal-title">
                                                                                     <?php echo $ques["question"]; ?></h6>
