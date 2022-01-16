@@ -134,28 +134,27 @@ include 'database.php';
                     
                         $judgemarksIdnumber = $row["jedgeId"];
                        //echo  $judgemarksIdnumber."<br/>";
-                        $judgetotlaMrakesList= "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects_vs_jedges.roundNumber, SUM(results.marks) marks,projects_vs_jedges.jedgeId from projects 
+                        $judgetotlaMrakesList= "SELECT projects.id,projects.projectType,projects.title, projects_vs_jedges.roundNumber, SUM(results.marks) marks,projects_vs_jedges.jedgeId from projects 
                         LEFT JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
                         LEFT JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
                         LEFT JOIN questions on results.questionId=questions.id where projects.projectType = 'Technology' and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.jedgeId = $judgemarksIdnumber
+                        and projects_vs_jedges.projectId  = $tectprojectId
                         group by projects_vs_jedges.projectId;";
                        
                         $judgemarkResult = $conn->query($judgetotlaMrakesList);
+                        $rowcount=mysqli_num_rows($judgemarkResult);
+                       
+                       // $counter = 0;
+                       while ($row = mysqli_fetch_row($judgemarkResult)){
                         
-                        
-                        while($row = $judgemarkResult->fetch_assoc()) {
-                           
-                             echo "<td>". $row["marks"] ."</td>";
-                             
-                        }
-                        
-                        
+                            echo "<td>{$row[4]}</td>";      
+                       }
                         
                     }
                 }       
                             
-                echo " <td> <a href='promote.php?id=" .$row["id"]. "' class=' doPromote-tech btn btn-primary $classdisable' id=" . $row["id"] . ">Promote</a></td>
-                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_Technology_" . $row["id"] . "'>
+                echo " <td> <a href='promote.php?id=" .$tectprojectId. "' class=' doPromote-tech btn btn-primary $classdisable' id=" . $tectprojectId . ">Promote</a></td>
+                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_Technology_" . $tectprojectId . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
    
@@ -273,11 +272,12 @@ projects_vs_jedges.projectId=" . $row['id'] . "
                             $judgemarksIdMarkes = $row["jedgeId"];
                             // echo  $judgemarksID;
                             $judgetotlaMrakes= "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks,projects_vs_jedges.jedgeId from projects 
-                            INNER JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
-                            INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
-                            INNER JOIN questions on results.questionId=questions.id 
+                            LEFT JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                            LEFT JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+                            LEFT JOIN questions on results.questionId=questions.id 
                             where projects.projectType = 'Business' and projects_vs_jedges.roundNumber=1 
-                            and projects_vs_jedges.jedgeId =$judgemarksIdMarkes group by projects_vs_jedges.projectId";
+                            and projects_vs_jedges.jedgeId =$judgemarksIdMarkes and projects_vs_jedges.projectId  = $projectId
+                            group by projects_vs_jedges.projectId";
                             $result = $conn->query($judgetotlaMrakes);
                             while($row = $result->fetch_assoc()) {
                             // print_r($row);
@@ -292,8 +292,8 @@ projects_vs_jedges.projectId=" . $row['id'] . "
                         }
                     }
                     
-                    echo"  <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote-business btn btn-primary $classdisable' id=" . $row["id"] . ">Promote</a></td>
-                    <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
+                    echo"  <td> <a href='promote.php?id=" . $projectId . "' class='doPromote-business btn btn-primary $classdisable' id=" . $projectId . ">Promote</a></td>
+                    <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $projectId . "'>
                     <i class='fa fa-eye'></i></a> </td>
                 
     
@@ -302,7 +302,7 @@ projects_vs_jedges.projectId=" . $row['id'] . "
     INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
     INNER JOIN questions on results.questionId=questions.id 
     where 
-    projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+    projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $projectId . " ORDER BY projects_vs_jedges.modifiedOn DESC";
                                                     $questiojns_result = $conn->query($questiojns_list);
                                             ?>
 

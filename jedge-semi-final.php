@@ -76,7 +76,7 @@ if (isset($_POST["judgeAssignedId"])) {
                         <div class="container-fluid">
                             <!-- Page Heading -->
                             <?php
-                            $project_list = "SELECT projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=2 and projects_vs_jedges.status='1' and projectType='Business' ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT projects.id as id, projects.title as title, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=2 and projects_vs_jedges.status='1' and projectType='Business' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
@@ -211,7 +211,7 @@ if (isset($_POST["judgeAssignedId"])) {
                         <div class="container-fluid">
                             <!-- Page Heading -->
                             <?php
-                            $project_list = "SELECT projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber='2' and projects_vs_jedges.status='1' and projectType='Technology' ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT projects.id as id, projects.title as title, projects.projectType  as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber='2' and projects_vs_jedges.status='1' and projectType='Technology' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
@@ -245,6 +245,7 @@ if (isset($_POST["judgeAssignedId"])) {
                 <tbody>";
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
+                                              //  print_r($row);
                                                 $questiojns_list = "SELECT * FROM questions where status='1'";
                                                 $questiojns_result = $conn->query($questiojns_list);
                                                 echo "<tr>
