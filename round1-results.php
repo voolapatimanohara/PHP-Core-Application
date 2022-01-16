@@ -83,8 +83,12 @@ include 'database.php';
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                   
                     <th>Total Marks</th>
+                    <th>J1</th>
+                    <th>J2</th>
+                    <th>J3</th>
+                    <th>J4</th>
+                    
                    
                     <th>Promote</th>
                     <th  class='text-center'>Actions</th>                       
@@ -94,8 +98,12 @@ include 'database.php';
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        
                         <th>Total Marks</th>
+                        <th>J1</th>
+                        <th>J2</th>
+                        <th>J3</th>
+                        <th>J4</th>
+                       
                    
                     <th>Promote</th>
                         <th  class='text-center'>Actions</th> 
@@ -103,34 +111,65 @@ include 'database.php';
             </tfoot>
                 <tbody>";
                                             // output data of each row
+                                            $tectprojectId= "";
                                             while ($row = $result->fetch_assoc()) {
                                                 $tectprojectId= $row["id"];
-
+                                                $getthejudgeId= " SELECT jedgeId FROM `projects_vs_jedges` WHERE projectId= $tectprojectId";
+                                                $judgeList = $conn->query($getthejudgeId);
+                                                
+                                                $judgemarksIdnumber= "";
+                                                $classdisable= "";
                                                 if ($row["roundNumber"] !== '1') {
-                                                    $class = "disabled";
+                                                    $classdisable = "disabled";
                                                 }
 
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
                 <td>" . $row["title"] . "</td>
-                 <td>" . $row["marks"] . "</td>
-                
+                <td>" . $row["marks"] . "</td>";
+
+                /*indivitaul Technology Judge total Marakes list*/ 
+                if ($judgeList->num_rows > 0) {
+                    while ($row = $judgeList->fetch_assoc()) {
+                    
+                        $judgemarksIdnumber = $row["jedgeId"];
+                       //echo  $judgemarksIdnumber."<br/>";
+                        $judgetotlaMrakesList= "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects_vs_jedges.roundNumber, SUM(results.marks) marks,projects_vs_jedges.jedgeId from projects 
+                        LEFT JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                        LEFT JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+                        LEFT JOIN questions on results.questionId=questions.id where projects.projectType = 'Technology' and projects_vs_jedges.roundNumber=1 and projects_vs_jedges.jedgeId = $judgemarksIdnumber
+                        group by projects_vs_jedges.projectId;";
+                       
+                        $judgemarkResult = $conn->query($judgetotlaMrakesList);
+                        
+                        
+                        while($row = $judgemarkResult->fetch_assoc()) {
+                           
+                             echo "<td>". $row["marks"] ."</td>";
+                             
+                        }
+                        
+                        
+                        
+                    }
+                }       
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class=' doPromote-tech btn btn-primary $class' id=" . $row["id"] . ">Promote</a></td>
+                echo " <td> <a href='promote.php?id=" .$row["id"]. "' class=' doPromote-tech btn btn-primary $classdisable' id=" . $row["id"] . ">Promote</a></td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_Technology_" . $row["id"] . "'>
                 <i class='fa fa-eye'></i></a> </td>
              
    
                 </tr>";
-                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects_vs_jedges.jedgeId,projects.projectType,projects.title,results.marks, results.remarks, results.judgeAssignedId  from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects_vs_jedges.jedgeId,projects.projectType,projects.title,results.marks, results.remarks, results.judgeAssignedId  from projects 
+                                                inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
 INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
 INNER JOIN questions on results.questionId=questions.id 
 where 
-projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . "   ORDER BY projects_vs_jedges.modifiedOn DESC";
+projects_vs_jedges.roundNumber=1 and 
+projects_vs_jedges.projectId=" . $row['id'] . "  
+ ORDER BY projects_vs_jedges.modifiedOn DESC";
                                                 $questiojns_result = $conn->query($questiojns_list);
-                                                // print_r($questiojns_result);
-                                                // $ques = $questiojns_result->fetch_assoc();
-                                                //  print_r($ques);
+                                                
                                         ?>
 
                                                 
@@ -158,6 +197,8 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
   projects_vs_jedges.roundNumber=1 group by projects_vs_jedges.projectId";
                             $result = $conn->query($project_list);
 
+                        
+
                             ?>
 
                             <div class="card shadow mb-4">
@@ -179,8 +220,12 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                   
                     <th>Total Marks</th>
+                    <th>J1</th>
+                    <th>J2</th>
+                    <th>J3</th>
+                    <th>J4</th>
+                  
                     
                     <th>Promote</th>
                     <th  class='text-center'>Actions</th>                       
@@ -190,40 +235,76 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        
                         <th>Total Marks</th>
+                        <th>J1</th>
+                        <th>J2</th>
+                        <th>J3</th>
+                        <th>J4</th>
+                        
                    
                     <th>Promote</th>
                         <th  class='text-center'>Actions</th> 
                     </tr>
             </tfoot>
                 <tbody>";
-                                            // output data of each row
-                                            while ($row = $result->fetch_assoc()) {
-                                                $projectId= $row["id"];
-                                                if ($row["roundNumber"] !== '1') {
-                                                    $class = "disabled";
-                                                }
+                    // output data of each row
+                    $projectId= "";
+                    while ($row = $result->fetch_assoc()) {
+                        $projectId= $row["id"];
+                        $getthejudgeId= " SELECT jedgeId FROM `projects_vs_jedges` WHERE projectId= $projectId";
+                        $judgeList = $conn->query($getthejudgeId);
+                        $judgemarksID= "";
+                        
+                        $classdisable="";
+                        
+                        if ($row["roundNumber"] !== '1') {
+                            $classdisable = "disabled";
+                        }
 
-                                                echo "<tr>
-                <td>" . $row["id"] . "</td>
-                <td>" . $row["title"] . "</td>
-                 <td>" . $row["marks"] . "</td>
-               
+                        echo "<tr>
+                    <td>" . $row["id"] . "</td>
+                    <td>" . $row["title"] . "</td>
+                    <td>". $row["marks"] ."</td>";
+                /*indivitaul Business Judge total Marakes list*/ 
+                    if ($judgeList->num_rows > 0) {
+                        $judgemarksIdMarkes= "";
+                        while ($row = $judgeList->fetch_assoc()) {
+                        
+                            $judgemarksIdMarkes = $row["jedgeId"];
+                            // echo  $judgemarksID;
+                            $judgetotlaMrakes= "SELECT projects.pr_url,projects.id,projects.projectType,projects.title, projects.roundNumber,SUM(results.marks) marks,projects_vs_jedges.jedgeId from projects 
+                            INNER JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+                            INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+                            INNER JOIN questions on results.questionId=questions.id 
+                            where projects.projectType = 'Business' and projects_vs_jedges.roundNumber=1 
+                            and projects_vs_jedges.jedgeId =$judgemarksIdMarkes group by projects_vs_jedges.projectId";
+                            $result = $conn->query($judgetotlaMrakes);
+                            while($row = $result->fetch_assoc()) {
+                            // print_r($row);
+                                echo "<td>". $row["marks"] ."</td>";
+                                
+                                
+                                
+                            }
                             
-                <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote-business btn btn-primary $class' id=" . $row["id"] . ">Promote</a></td>
-                <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
-                <i class='fa fa-eye'></i></a> </td>
-             
-   
-                </tr>";
-                                                $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects_vs_jedges.jedgeId,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
-INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
-INNER JOIN questions on results.questionId=questions.id 
-where 
-projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
-                                                $questiojns_result = $conn->query($questiojns_list);
-                                        ?>
+                            
+                            
+                        }
+                    }
+                    
+                    echo"  <td> <a href='promote.php?id=" . $row["id"] . "' class='doPromote-business btn btn-primary $classdisable' id=" . $row["id"] . ">Promote</a></td>
+                    <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
+                    <i class='fa fa-eye'></i></a> </td>
+                
+    
+                    </tr>";
+                                                    $questiojns_list = "SELECT questions.question,questions.description,projects.pr_url,projects_vs_jedges.id,projects_vs_jedges.jedgeId,projects.projectType,projects.title,results.marks, results.remarks from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId 
+    INNER JOIN results on projects_vs_jedges.id=results.judgeAssignedId 
+    INNER JOIN questions on results.questionId=questions.id 
+    where 
+    projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id'] . " ORDER BY projects_vs_jedges.modifiedOn DESC";
+                                                    $questiojns_result = $conn->query($questiojns_list);
+                                            ?>
 
                                                 
                                             <?php
@@ -284,6 +365,8 @@ projects_vs_jedges.roundNumber=1 and projects_vs_jedges.projectId=" . $row['id']
         });
     });
 </script>
+
+
 <?php
 
 
@@ -305,36 +388,33 @@ $result2 = $conn->query($roundMarkesList);
                                <?php while ($ques = $questiojns_result->fetch_assoc()) {
 
                                    
-                                    $judgeId=  $ques['jedgeId'];
-                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
-                                    $judge_result = $conn->query($judgenames_list);
-                                    
-                                    $judgeName= $judge_result->fetch_assoc();
-                                    
+                                                                    $judgeId=  $ques['jedgeId'];
+                                                                    $judgenames_list = "SELECT firstName, lastName From login where id = $judgeId"; 
+                                                                    $judge_result = $conn->query($judgenames_list);
+                                                                    
+                                                                    $judgeName= $judge_result->fetch_assoc();
+                                                                    
 
-                                ?>
-                                <table  class="table table-bordered">
-                                    <tr>
-                                        <td><?php echo $ques["description"]; ?></td>
-                                        <td>
-                                            <table class="table table-bordered">
-
-                                                <tr>
-                                                    <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
-                                                    <td><?php echo $ques["marks"]; ?></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
-                                                    <td><?php echo $ques["marks"]; ?></td>
-                                                </tr>
-                                                <!-- <tr>
-                                                    <td><?php //echo substr($ques["remarks"],0,25);?></td></tr> -->
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
+                                                                ?>
                                                                 
-                                    
+                                    <table class="table table-bordered">
+                                       
+                                        
+                                        <tr>
+                                            <td rowspan="2"><?php echo $ques["description"]; ?></td>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td><?php  echo $judgeName["firstName"].$judgeName["lastName"]; ?></td>
+                                                    <td><?php echo $ques["marks"]; ?></td>
+                                                </tr>
+                                            </table>
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo substr($ques["remarks"],0,25);?></td>
+                                           
+                                           
+                                        </tr>
+                                    </table>
                                     <?php }?>
                                 </div>
                                 <div class="modal-footer">

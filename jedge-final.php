@@ -143,7 +143,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                             <div class="header my-0">
                                                                     <h5>Project Title: <?php echo $row["title"]; ?></h5>
                                                                 </div> 
-                                                                <form name="judges_final_form" id="judges_final_form" class="user" enctype="multipart/form-data" method="post">
+                                                                <form name="judges_final_form" id="judges_final_form" class="user" enctype="multipart/form-data" method="post" onsubmit="validateSaveData();">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
@@ -278,7 +278,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                             <div class="header my-0">
                                                                     <h5>Project Title: <?php echo $row["title"]; ?></h5>
                                                                 </div> 
-                                                                <form name="judges_final_form" id="judges_final_form" class="user" enctype="multipart/form-data" method="post">
+                                                                <form name="judges_final_form" id="judges_final_form" class="user" enctype="multipart/form-data" method="post" onsubmit="validateSaveData();">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
@@ -346,6 +346,16 @@ if (isset($_POST["judgeAssignedId"])) {
 
                     <?php include 'admin-footer.php'; ?>
 
+<script>
+   
+   function validateSaveData() {
+       
+       confirm("Sure are you want Submit");
+
+   }
+   //return true;
+   
+</script>
 </body>
 
 </html>

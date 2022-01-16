@@ -76,7 +76,7 @@ if (isset($_POST["judgeAssignedId"])) {
                         <div class="container-fluid">
                             <!-- Page Heading -->
                             <?php
-                            $project_list = "SELECT *,projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=2 and projects_vs_jedges.status='1' and projectType='Business' ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=2 and projects_vs_jedges.status='1' and projectType='Business' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
@@ -143,7 +143,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                             <div class="header my-0">
                                                                     <h5>Project Title: <?php echo $row["title"]; ?></h5>
                                                                 </div> 
-                                                                <form name="judges_semi_final_form" id="judges_semi_final_form" class="user" enctype="multipart/form-data" method="post">
+                                                                <form name="judges_semi_final_form" id="judges_semi_final_form" class="user" enctype="multipart/form-data" method="post" onsubmit="validateSaveData();">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
@@ -211,7 +211,7 @@ if (isset($_POST["judgeAssignedId"])) {
                         <div class="container-fluid">
                             <!-- Page Heading -->
                             <?php
-                            $project_list = "SELECT *,projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber=2 and projects_vs_jedges.status='1' and projectType='Technology' ORDER BY modifiedOn DESC";
+                            $project_list = "SELECT projects.id as id, projects.projectType as projectType, projects_vs_jedges.id as pjid from projects inner JOIN projects_vs_jedges on projects.id=projects_vs_jedges.projectId where projects_vs_jedges.jedgeId= $judgeId and projects_vs_jedges.roundNumber='2' and projects_vs_jedges.status='1' and projectType='Technology' ORDER BY modifiedOn DESC";
                             $result = $conn->query($project_list);
 
                             ?>
@@ -278,7 +278,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                             <div class="header my-0">
                                                                     <h5>Project Title: <?php echo $row["title"]; ?></h5>
                                                                 </div> 
-                                                                <form name="judges_semi_final_form" id="judges_semi_final_form" class="user" enctype="multipart/form-data" method="post">
+                                                                <form name="judges_semi_final_form" id="judges_semi_final_form" class="user" enctype="multipart/form-data" method="post" onsubmit="validateSaveData();">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
@@ -345,6 +345,18 @@ if (isset($_POST["judgeAssignedId"])) {
                     <!-- Logout Modal-->
 
                     <?php include 'admin-footer.php'; ?>
+
+
+<script>
+   
+   function validateSaveData() {
+       
+       confirm("Sure are you want Submit");
+
+   }
+   //return true;
+   
+</script>                   
 
 </body>
 

@@ -95,7 +95,10 @@ if (isset($_POST["judgeAssignedId"])) {
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Project Type</th>
+                    <th>Program</th>
+                    <th>Sponsor</th>
+                    <th>Link</th>
+                    <th>Description</th>
                     <th  class='text-center'>Actions</th>                       
                 </tr>
             </thead>
@@ -103,7 +106,10 @@ if (isset($_POST["judgeAssignedId"])) {
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Project Type</th>
+                        <th>Program</th>
+                        <th>Sponsor</th>
+                        <th>Link</th>
+                        <th>Description</th>
                         <th  class='text-center'>Actions</th> 
                     </tr>
             </tfoot>
@@ -115,7 +121,13 @@ if (isset($_POST["judgeAssignedId"])) {
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
                 <td>" . $row["title"] . "</td>
-                <td>" . $row["projectType"] . "</td>
+                <td>".$row["program"]."</td>
+                <td>".$row["sponsor"]."</td>
+                
+                <td><a href='".$row["pr_url"]."'  target='_blank'>
+                ".$row["pr_url"]."</a></td>
+                <td>" .substr($row["pr_description"],0,25)."..</td>
+
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-external-link-alt'></i></a> </td>
              
@@ -143,7 +155,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                             <div class="header my-0">
                                                                     <h5>Project Title: <?php echo $row["title"]; ?></h5>
                                                                 </div> 
-                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post">
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post" onsubmit="validateSaveData();">
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
@@ -230,7 +242,10 @@ if (isset($_POST["judgeAssignedId"])) {
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Project Type</th>
+                    <th>Program</th>
+                    <th>Sponsor</th>
+                    <th>Link</th>
+                    <th>Description</th>
                     <th  class='text-center'>Actions</th>                       
                 </tr>
             </thead>
@@ -238,7 +253,10 @@ if (isset($_POST["judgeAssignedId"])) {
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Project Type</th>
+                        <th>Program</th>
+                        <th>Sponsor</th>
+                        <th>Link</th>
+                        <th>Description</th>
                         <th  class='text-center'>Actions</th> 
                     </tr>
             </tfoot>
@@ -250,7 +268,12 @@ if (isset($_POST["judgeAssignedId"])) {
                                                 echo "<tr>
                 <td>" . $row["id"] . "</td>
                 <td>" . $row["title"] . "</td>
-                <td>" . $row["projectType"] . "</td>
+                <td>".$row["program"]."</td>
+                <td>".$row["sponsor"]."</td>
+                
+                <td><a href='".$row["pr_url"]."' target='_blank'>
+                ".$row["pr_url"]."</a></td>
+                <td>" .substr($row["pr_description"],0,25)."..</td>
                 <td class='text-center'> <a href='#' data-toggle='modal' data-target='#roundProjectModel_" . $row["id"] . "'>
                 <i class='fa fa-external-link-alt'></i></a> </td>
              
@@ -278,7 +301,7 @@ if (isset($_POST["judgeAssignedId"])) {
                                                             <div class="header my-0">
                                                                     <h5>Project Title: <?php echo $row["title"]; ?></h5>
                                                                 </div> 
-                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post">
+                                                                <form name="judges_round1_form" id="judges_round1_form" class="user" enctype="multipart/form-data" method="post" onsubmit="validateSaveData();" >
                                                                     <?php
                                                                     // output data of each row
                                                                     while ($ques = $questiojns_result->fetch_assoc()) {
@@ -346,6 +369,18 @@ if (isset($_POST["judgeAssignedId"])) {
 
                     <?php include 'admin-footer.php'; ?>
 
+
+<script>
+   
+    function validateSaveData() {
+        
+        confirm("Sure are you want Submit");
+
+    }
+    //return true;
+    
+</script>
 </body>
+
 
 </html>
