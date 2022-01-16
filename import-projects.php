@@ -52,6 +52,7 @@ if (isset($_POST['submit'])) {
 				$query_parts[] = "('" . $rowData[0][0] . "', '" . $rowData[0][1] . "','" . $rowData[0][2] . "','" . $rowData[0][3] . "','" . $rowData[0][4] . "','" . $rowData[0][5] . "','" . $rowData[0][6] . "','" . $rowData[0][7] . "','" . $rowData[0][8] . "')";
 			}
 			$query .= implode(',', $query_parts);
+			
 			if ($conn->multi_query($query) === TRUE) {
 				$response = array(
 					"status" => "alert-success",

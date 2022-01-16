@@ -170,6 +170,7 @@ if (isset($_SESSION['id'])) {
                             </div>
 
                         </div>
+                        
                         <div class="container-fluid">
 
 <!-- Page Heading -->

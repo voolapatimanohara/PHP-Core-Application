@@ -174,7 +174,7 @@ $mentor = $_POST['mentor'];
                                     <form method="POST" action="import-projects.php" enctype="multipart/form-data">
                                         <div class="form-group">
                                             
-                                            <input type="file" name="uploadFile" class="form-control" require />
+                                            <input type="file" name="uploadFile" class="form-control" required />
                                             <label> <a href="./projects.xlsx">Download Sample Projects File</a></label>
                                         </div>
                                         <div class="form-group">

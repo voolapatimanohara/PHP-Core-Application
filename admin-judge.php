@@ -114,7 +114,7 @@
                                     <form method="POST" action="read-excel.php" enctype="multipart/form-data">
                                         <div class="form-group">
                                             
-                                            <input type="file" name="uploadFile" class="form-control" require />
+                                            <input type="file" name="uploadFile" class="form-control" required />
                                             <label> <a href="./test.xlsx">Download Sample File</a></label>
                                         </div>
                                         <div class="form-group">
